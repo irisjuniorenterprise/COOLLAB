@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ParticipateToTrainingSession index{% endblock %}
+
+{% block body %}
+    <h1>ParticipateToTrainingSession index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>IsPresent</th>
+                <th>Comment</th>
+                <th>Rate</th>
+                <th>ParticipatedAt</th>
+                <th>CommentedAt</th>
+                <th>IsCached</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for participate_to_training_session in participate_to_training_sessions %}
+            <tr>
+                <td>{{ participate_to_training_session.id }}</td>
+                <td>{{ participate_to_training_session.isPresent ? 'Yes' : 'No' }}</td>
+                <td>{{ participate_to_training_session.comment }}</td>
+                <td>{{ participate_to_training_session.rate }}</td>
+                <td>{{ participate_to_training_session.participatedAt ? participate_to_training_session.participatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ participate_to_training_session.commentedAt ? participate_to_training_session.commentedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ participate_to_training_session.isCached ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_participate_to_training_session_show', {'id': participate_to_training_session.id}) }}">show</a>
+                    <a href="{{ path('app_participate_to_training_session_edit', {'id': participate_to_training_session.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_participate_to_training_session_new') }}">Create new</a>
+{% endblock %}

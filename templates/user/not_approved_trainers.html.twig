@@ -1,0 +1,54 @@
+{% extends 'adminDashboard/base.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+    {{ include('partials/_header.html.twig') }}
+    {{ include('partials/_sidebar.html.twig') }}
+    <!-- Recent Sales Start -->
+    <div class="container-fluid pt-4 px-4">
+        <div class="bg-light text-center rounded p-4">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h6 class="mb-0">Les Demandes de Formateurs</h6>
+            </div>
+            <div class="table-responsive">
+                <table class="table text-start align-middle table-bordered table-hover mb-0">
+                    <thead>
+                    <tr class="text-dark">
+                        <th scope="col" class="bg-info">Id</th>
+                        <th scope="col" class="bg-info">Email</th>
+                        <th scope="col" class="bg-info">Phone</th>
+                        <th scope="col" class="bg-info">FullName</th>
+                        <th scope="col" class="bg-info">Address</th>
+                        <th scope="col" class="bg-info">IsBanned</th>
+                        <th scope="col" class="bg-info">actions</th>
+                    </tr>
+                    </thead>
+                        <tbody>
+                        {% for user in trainers %}
+                            <tr class="m-5">
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.phone }}</td>
+                                <td>{{ user.fullName }}</td>
+                                <td>{{ user.address }}</td>
+                                <td>{{ user.isBanned ? 'Yes' : 'No' }}</td>
+                                <td>
+                                    <a class="btn btn-outline-primary"
+                                       href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
+                                    <a class="btn btn-outline-primary"
+                                       href="{{ path('app_user_approve_trainer', {'id': user.id}) }}">Approuver</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td class="text-center" colspan="7">Aucun élève trouvé</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Recent Sales End -->
+{% endblock %}

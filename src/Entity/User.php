@@ -3,13 +3,17 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -33,7 +37,45 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private string $phone;
 
     #[ORM\Column(length: 255)]
+    private string $firstName;
+
+    #[ORM\Column(length: 255)]
+    private string $lastName;
+
+    #[ORM\Column(length: 255)]
     private string $address;
+
+    /**
+     * @return string
+     */
+    public function getFirstName(): string
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @param string $firstName
+     */
+    public function setFirstName(string $firstName): void
+    {
+        $this->firstName = $firstName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastName(): string
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @param string $lastName
+     */
+    public function setLastName(string $lastName): void
+    {
+        $this->lastName = $lastName;
+    }
 
     #[ORM\Column]
     private bool $isBanned;
@@ -51,7 +93,39 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private array $club = [];
 
     #[ORM\Column(nullable: true)]
-    private ?int $score = null;
+    private ?float $score = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ParticipateToCompetition::class)]
+    private Collection $participateToCompetitions;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: TrainingTrainer::class, fetch: 'EAGER')]
+    private Collection $trainingTrainers;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ParticipateToTrainingSession::class)]
+    private Collection $participateToTrainingSessions;
+
+    #[ORM\Column(type: 'boolean')]
+    private $isVerified = false;
+
+    #[ORM\Column]
+    private ?bool $isApproved = null;
+
+    public function __construct()
+    {
+        $this->participateToCompetitions = new ArrayCollection();
+        $this->trainingTrainers = new ArrayCollection();
+        $this->participateToTrainingSessions = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->getFullName();
+    }
+
+    public function getFullName(): string
+    {
+        return $this->firstName . ' ' . $this->lastName;
+    }
 
     public function getId(): ?int
     {
@@ -147,7 +221,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isIsBanned(): ?bool
+    public function getIsBanned(): ?bool
     {
         return $this->isBanned;
     }
@@ -215,6 +289,121 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setScore(?int $score): self
     {
         $this->score = $score;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ParticipateToCompetition>
+     */
+    public function getParticipateToCompetitions(): Collection
+    {
+        return $this->participateToCompetitions;
+    }
+
+    public function addParticipateToCompetition(ParticipateToCompetition $participateToCompetition): self
+    {
+        if (!$this->participateToCompetitions->contains($participateToCompetition)) {
+            $this->participateToCompetitions->add($participateToCompetition);
+            $participateToCompetition->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipateToCompetition(ParticipateToCompetition $participateToCompetition): self
+    {
+        if ($this->participateToCompetitions->removeElement($participateToCompetition)) {
+            // set the owning side to null (unless already changed)
+            if ($participateToCompetition->getUser() === $this) {
+                $participateToCompetition->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TrainingTrainer>
+     */
+    public function getTrainingTrainers(): Collection
+    {
+        return $this->trainingTrainers;
+    }
+
+    public function addTrainingTrainer(TrainingTrainer $trainingTrainer): self
+    {
+        if (!$this->trainingTrainers->contains($trainingTrainer)) {
+            $this->trainingTrainers->add($trainingTrainer);
+            $trainingTrainer->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrainingTrainer(TrainingTrainer $trainingTrainer): self
+    {
+        if ($this->trainingTrainers->removeElement($trainingTrainer)) {
+            // set the owning side to null (unless already changed)
+            if ($trainingTrainer->getUser() === $this) {
+                $trainingTrainer->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ParticipateToTrainingSession>
+     */
+    public function getParticipateToTrainingSessions(): Collection
+    {
+        return $this->participateToTrainingSessions;
+    }
+
+    public function addParticipateToTrainingSession(ParticipateToTrainingSession $participateToTrainingSession): self
+    {
+        if (!$this->participateToTrainingSessions->contains($participateToTrainingSession)) {
+            $this->participateToTrainingSessions->add($participateToTrainingSession);
+            $participateToTrainingSession->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipateToTrainingSession(ParticipateToTrainingSession $participateToTrainingSession): self
+    {
+        if ($this->participateToTrainingSessions->removeElement($participateToTrainingSession)) {
+            // set the owning side to null (unless already changed)
+            if ($participateToTrainingSession->getUser() === $this) {
+                $participateToTrainingSession->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
+    // $2y$13$V/HneYV7lvDuiQ0YczkTpezf/rHgzCc8VlNZsISuOPfgmNVk4quvq
+
+    public function isIsApproved(): ?bool
+    {
+        return $this->isApproved;
+    }
+
+    public function setIsApproved(bool $isApproved): self
+    {
+        $this->isApproved = $isApproved;
 
         return $this;
     }

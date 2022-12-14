@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit ParticipateToTrainingSession{% endblock %}
+
+{% block body %}
+    <h1>Edit ParticipateToTrainingSession</h1>
+
+    {{ include('participate_to_training_session/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_participate_to_training_session_index') }}">back to list</a>
+
+    {{ include('participate_to_training_session/_delete_form.html.twig') }}
+{% endblock %}

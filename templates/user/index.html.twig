@@ -1,0 +1,83 @@
+{% extends 'adminDashboard/base.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+    {{ include('partials/_header.html.twig') }}
+    {{ include('partials/_sidebar.html.twig') }}
+    <!-- Recent Sales Start -->
+    <div class="container-fluid pt-4 px-4">
+        <div class="bg-light text-center rounded p-4">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h6 class="mb-0">Les éléves</h6>
+                <a class="btn btn-outline-primary" href="{{ path('app_user_new') }}">Ajouter <i
+                            class="fa-solid fa-plus"></i></a>
+            </div>
+            <form action="{{ path('app_user_index_search') }}" method="get" class="mb-3">
+                <div class="input-group">
+                    <div class="form-outline">
+                        <input autofocus placeholder="Recherche..." value="{{ username ?? '' }}" name="q" type="text" id="form1" class="form-control" />
+                    </div>
+                    <input type="submit" class="btn btn-outline-primary"/>
+                </div>
+            </form>
+            <div class="table-responsive">
+                <table class="table text-start align-middle table-bordered table-hover mb-0">
+                    <thead>
+                    <tr class="text-dark">
+                        <th scope="col" class="bg-info">Id</th>
+                        <th scope="col" class="bg-info">Email</th>
+                        <th scope="col" class="bg-info">Phone</th>
+                        <th scope="col" class="bg-info">FullName</th>
+                        <th scope="col" class="bg-info">Address</th>
+                        <th scope="col" class="bg-info">IsBanned</th>
+                        <th scope="col" class="bg-info">actions</th>
+                    </tr>
+                    </thead>
+                    <turbo-frame id="user-list-{{ pager.currentPage }}" target="_top">
+                        <tbody>
+                        {% for user in pager %}
+                            <tr class="m-5">
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.phone }}</td>
+                                <td>{{ user.fullName }}</td>
+                                <td>{{ user.address }}</td>
+                                <td>{{ user.isBanned ? 'Yes' : 'No' }}</td>
+                                <td>
+                                    <a class="btn btn-outline-primary"
+                                       href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
+                                    <a class="btn btn-outline-primary"
+                                       href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier</a>
+                                    {% if user.isBanned == false %}
+                                    <a class="btn btn-outline-primary"
+                                       href="{{ path('app_user_ban', {'id': user.id}) }}">Bloquer</a>
+                                    {% else %}
+                                    <a class="btn btn-outline-primary"
+                                       href="{{ path('app_user_unban', {'id': user.id}) }}">Débloquer</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td class="text-center" colspan="7">Aucun élève trouvé</td>
+                            </tr>
+                        {% endfor %}
+                        {% if pager.hasNextPage %}
+                            <turbo-frame
+                                    id="user-list-{{ pager.nextPage }}" target="_top"
+                                    src="{{ pagerfanta_page_url(pager, pager.nextPage) }}"
+                                    loading="lazy"
+                            ></turbo-frame>
+                        {% endif %}
+
+                        </tbody>
+                    </turbo-frame>
+                </table>
+            </div>
+            <br>
+            {{ pagerfanta(pager) }}
+        </div>
+    </div>
+    <!-- Recent Sales End -->
+{% endblock %}

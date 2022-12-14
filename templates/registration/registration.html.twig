@@ -1,0 +1,157 @@
+{% extends 'base.html.twig' %}
+{% block title %}Registre au COLLAB Platforme{% endblock %}
+{% block body %}
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Start Choose
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <section class="choose-section pb-120">
+        <div class="choose-element-one" data-aos="fade-left" data-aos-duration="1200">
+            <img src="{{ asset('build/images/element/element-28.png') }}" alt="element">
+        </div>
+        <div class="choose-element-two">
+            <img src="{{ asset('build/images/element/element-29.png') }}" alt="element">
+        </div>
+        <div class="choose-element-three">
+            <img src="{{ asset('build/images/element/element-30.png') }}" alt="element">
+        </div>
+        <div class="choose-element-four">
+            <img src="{{ asset('build/images/element/element-31.png') }}" alt="element">
+        </div>
+        <div class="choose-element-five">
+            <img src="{{ asset('build/images/element/element-32.png') }}" alt="element">
+        </div>
+        <div class="container">
+            <div class="row justify-content-center mt-5">
+                <div class="col-xl-7 col-lg-8 text-center">
+                    <div class="section-header">
+                        <h2 class="section-title">Why Choose Softim?</h2>
+                        <p>We rank among the best in the US, Argentina, and Ukraine. Our apps get featured as best in
+                            class, and our clients love our work.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="choose-area">
+                <div class="choose-tab">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <button class="nav-link" id="software-tab" data-toggle="tab" data-target="#software"
+                                    type="button" role="tab" aria-controls="software" aria-selected="false">Compte Utilisateur
+                            </button>
+                            <button class="nav-link active" id="company-tab" data-toggle="tab" data-target="#company"
+                                    type="button" role="tab" aria-controls="company" aria-selected="true">
+                                Compte Formateur
+                            </button>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade" id="software" role="tabpanel" aria-labelledby="software-tab">
+                            <div class="choose-item">
+                                <div style="width: 100%;" class="rounded">
+                                    <h3>Registre en tant que utilisateur</h3>
+                                    <p>Vous pouvez vous inscrire en tant qu'utilisateur pour accéder à la plateforme et
+                                        bénéficier de ses services.</p>
+                                    {{ form_start(registrationForm) }}
+                                    {% for flash in app.flashes('success') %}
+                                        <div class="alert alert-success">{{ flash }}</div>
+                                    {% endfor %}
+                                    <div class="form-row">
+                                        <div class="form-floating form-group mb-3 col-md-6">
+                                            {{ form_row(registrationForm.email) }}
+                                        </div>
+                                        <div class="form-floating form-group mb-4 col-md-6">
+                                            {{ form_row(registrationForm.plainPassword, {
+                                                label: 'Password'
+                                            }) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-floating form-group col-md-6 mb-4">
+                                            {{ form_row(registrationForm.firstName) }}
+                                        </div>
+                                        <div class="form-floating form-group col-md-6 mb-4">
+                                            {{ form_row(registrationForm.lastName) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-floating form-group col-md-6 mb-4">
+                                            {{ form_row(registrationForm.phone) }}
+                                        </div>
+                                        <div class="form-floating form-group col-md-6 mb-4">
+                                            {{ form_row(registrationForm.address) }}
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Sign In
+                                    </button>
+                                    {{ form_end(registrationForm) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade show active" id="company" role="tabpanel"
+                             aria-labelledby="company-tab">
+                            <div class="choose-item">
+                                <div style="width: 100%;" class="rounded">
+                                    <h3>Registre en tant que formateur</h3>
+                                    <p>Vous pouvez vous inscrire en tant que formateur pour accéder à la plateforme et
+                                        bénéficier de ses services.</p>
+                                    {{ form_start(registrationTrainerForm) }}
+                                    {% for flash in app.flashes('success') %}
+                                        <div class="alert alert-success">{{ flash }}</div>
+                                    {% endfor %}
+                                    <div class="form-row">
+                                        <div class="form-floating form-group mb-3 col-md-6">
+                                            {{ form_row(registrationTrainerForm.email) }}
+                                        </div>
+                                        <div class="form-floating form-group mb-4 col-md-6">
+                                            {{ form_row(registrationTrainerForm.plainPassword, {
+                                                label: 'Password'
+                                            }) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-floating form-group col-md-6 mb-4">
+                                            {{ form_row(registrationTrainerForm.firstName) }}
+                                        </div>
+                                        <div class="form-floating form-group col-md-6 mb-4">
+                                            {{ form_row(registrationTrainerForm.lastName) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-floating form-group col-md-6 mb-4">
+                                            {{ form_row(registrationTrainerForm.phone) }}
+                                        </div>
+                                        <div class="form-floating form-group col-md-6 mb-4">
+                                            {{ form_row(registrationTrainerForm.cin) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-floating mb-4">
+                                        {{ form_row(registrationTrainerForm.address) }}
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-floating form-group col-md-6 mb-4">
+                                            <label for="club">Club</label>
+                                            <input type="text" class="form-control" id="club" name="club"
+                                                   placeholder="Veuillez séparer chacun club par une ( , ).">
+                                        </div>
+                                        <div class="form-floating form-group col-md-6 mb-4">
+                                            <label for="work">Expérience</label>
+                                            <input type="text" class="form-control" id="work" name="work"
+                                                   placeholder="Veuillez séparer chacune des sociétés par une ( , ).">
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Sign In
+                                    </button>
+                                    {# <p class="text-center mb-0">Don't have an Account? <a href="">Sign Up</a></p> #}
+                                    {{ form_end(registrationTrainerForm) }}
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-center mb-0">vous avez déja un compte ? <a style="color: #1A3969" href="{{ path('login_users') }}">Connectez-vous</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Choose
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+{% endblock %}

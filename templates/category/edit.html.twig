@@ -1,0 +1,23 @@
+{% extends 'adminDashboard/base.html.twig' %}
+
+{% block title %}Edit Category{% endblock %}
+
+{% block body %}
+    {{ include('partials/_header.html.twig') }}
+    {{ include('partials/_sidebar.html.twig') }}
+    <div class="container-fluid pt-4 px-4">
+        <div class="table-responsive">
+            {% for message in app.flashes('danger') %}
+                <div class="flash-notice alert-danger p-2">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {{ include('category/_form.html.twig', {'button_label': 'Modifier'}) }}
+            <div class="d-flex justify-content-start">
+                <a class="btn btn-outline-primary" href="{{ path('app_category_index') }}">Retour à la liste</a>
+                &emsp13;&emsp13;
+                {{ include('category/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,219 @@
+{% extends 'base.html.twig' %}
+{% block title %}Nos Formations{% endblock %}
+{% block body %}
+    {{ include('partials/_header.index.html.twig') }}
+    <section class="banner-section two inner">
+        <div class="banner-element-four two">
+            <img src="{{ asset('build/images/element/element-5.png') }}" alt="element">
+        </div>
+        <div class="banner-element-five two">
+            <img src="{{ asset('build/images/element/element-7.png') }}" alt="element">
+        </div>
+        <div class="banner-element-nineteen two">
+            <img src="{{ asset('build/images/element/element-6.png') }}" alt="element">
+        </div>
+        <div class="banner-element-twenty-two two">
+            <img src="{{ asset('build/images/element/element-69.png') }}" alt="element">
+        </div>
+        <div class="banner-element-twenty-three two">
+            <img src="{{ asset('build/images/element/element-70.png') }}" alt="element">
+        </div>
+        <div class="container">
+            <div class="row justify-content-center align-items-center mb-30-none">
+                <div class="col-xl-12 mb-30">
+                    <div class="banner-content two">
+                        <div class="banner-content-header">
+                            <h2 class="title">Our Projects</h2>
+                            <div class="breadcrumb-area">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Home</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Portfolio</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="gallery-section ptb-120">
+        <div class="container">
+            <div class="gallery-filter-wrapper">
+                <div class="button-group filter-btn-group two">
+                    <button class="active" data-filter="*">All</button>
+                    <button data-filter=".design">Web Development</button>
+                    <button data-filter=".webdev">Software Development</button>
+                    <button data-filter=".marketing">Digital marketing</button>
+                    <button data-filter=".appdev">UX/UI Design</button>
+                </div>
+                <div class="grid two">
+                    <div class="grid-item design marketing">
+                        <div class="gallery-item">
+                            <div class="gallery-thumb">
+                                <img src="{{ asset('build/images/gallery/gallery-10.png') }}" alt="gallery">
+                                <div class="gallery-thumb-overlay">
+                                    <div class="gallery-icon">
+                                        <a class="img-popup" data-rel="lightcase:myCollection"
+                                           href="../../assets/images/gallery/gallery-10.png"><img
+                                                    src="../../assets/images/icon/icon-21.png" alt="icon"></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="gallery-content">
+                                <span class="sub-title">BRANDING ILLUSTRATION</span>
+                                <h3 class="title"><a href="project-details.html">Modern Technology</a></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-item webdev marketing">
+                        <div class="gallery-item">
+                            <div class="gallery-thumb">
+                                <img src="{{ asset('build/images/gallery/gallery-2.png') }}" alt="gallery">
+                                <div class="gallery-thumb-overlay">
+                                    <div class="gallery-icon">
+                                        <a class="img-popup" data-rel="lightcase:myCollection"
+                                           href="{{ asset('build/images/gallery/gallery-2.png') }}"><img
+                                                    src="{{ asset('build/images/icon/icon-21.png') }}" alt="icon"></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="gallery-content">
+                                <span class="sub-title">BRANDING ILLUSTRATION</span>
+                                <h3 class="title"><a href="project-details.html">Corporate Software Solutions</a></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-item appdev design">
+                        <div class="gallery-item">
+                            <div class="gallery-thumb">
+                                <img src="{{ asset('build/images/gallery/gallery-3.png') }}" alt="gallery">
+                                <div class="gallery-thumb-overlay">
+                                    <div class="gallery-icon">
+                                        <a class="img-popup" data-rel="lightcase:myCollection"
+                                           href="{{ asset('build/images/gallery/gallery-3.png') }}"><img
+                                                    src="{{ asset('build/images/icon/icon-21.png') }}" alt="icon"></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="gallery-content">
+                                <span class="sub-title">BRANDING ILLUSTRATION</span>
+                                <h3 class="title"><a href="project-details.html">Ecommerce Solutions</a></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-item appdev design">
+                        <div class="gallery-item">
+                            <div class="gallery-thumb">
+                                <img src="{{ asset('build/images/gallery/gallery-11.png') }}" alt="gallery">
+                                <div class="gallery-thumb-overlay">
+                                    <div class="gallery-icon">
+                                        <a class="img-popup" data-rel="lightcase:myCollection"
+                                           href="{{ asset('build/images/gallery/gallery-11.png') }}"><img
+                                                    src="{{ asset('build/images/icon/icon-21.png') }}g" alt="icon"></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="gallery-content">
+                                <span class="sub-title">BRANDING ILLUSTRATION</span>
+                                <h3 class="title"><a href="project-details.html">Modern Technology</a></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-item webdev">
+                        <div class="gallery-item">
+                            <div class="gallery-thumb">
+                                <img src="{{ asset('build/images/gallery/gallery-4.png') }}" alt="gallery">
+                                <div class="gallery-thumb-overlay">
+                                    <div class="gallery-icon">
+                                        <a class="img-popup" data-rel="lightcase:myCollection"
+                                           href="{{ asset('build/images/gallery/gallery-4.png') }}"><img
+                                                    src="{{ asset('build/images/icon/icon-21.png') }}" alt="icon"></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="gallery-content">
+                                <span class="sub-title">BRANDING ILLUSTRATION</span>
+                                <h3 class="title"><a href="project-details.html">Corporate Software Solutions</a></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-item marketing">
+                        <div class="gallery-item">
+                            <div class="gallery-thumb">
+                                <img src="{{ asset('build/images/gallery/gallery-5.png') }}" alt="gallery">
+                                <div class="gallery-thumb-overlay">
+                                    <div class="gallery-icon">
+                                        <a class="img-popup" data-rel="lightcase:myCollection"
+                                           href="{{ asset('build/images/gallery/gallery-5.png') }}"><img
+                                                    src="{{ asset('build/images/icon/icon-21.png') }}" alt="icon"></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="gallery-content">
+                                <span class="sub-title">BRANDING ILLUSTRATION</span>
+                                <h3 class="title"><a href="project-details.html">Ecommerce Solutions</a></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-item design">
+                        <div class="gallery-item">
+                            <div class="gallery-thumb">
+                                <img src="{{ asset('build/images/gallery/gallery-6.png') }}" alt="gallery">
+                                <div class="gallery-thumb-overlay">
+                                    <div class="gallery-icon">
+                                        <a class="img-popup" data-rel="lightcase:myCollection"
+                                           href="{{ asset('build/images/gallery/gallery-6.png') }}"><img
+                                                    src="{{ asset('build/images/icon/icon-21.png') }}" alt="icon"></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="gallery-content">
+                                <span class="sub-title">BRANDING ILLUSTRATION</span>
+                                <h3 class="title"><a href="project-details.html">Modern Technology</a></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-item webdev">
+                        <div class="gallery-item">
+                            <div class="gallery-thumb">
+                                <img src="{{ asset('build/images/gallery/gallery-7.png') }}" alt="gallery">
+                                <div class="gallery-thumb-overlay">
+                                    <div class="gallery-icon">
+                                        <a class="img-popup" data-rel="lightcase:myCollection"
+                                           href="{{ asset('build/images/gallery/gallery-7.png') }}"><img
+                                                    src="{{ asset('build/images/icon/icon-21.png') }}" alt="icon"></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="gallery-content">
+                                <span class="sub-title">BRANDING ILLUSTRATION</span>
+                                <h3 class="title"><a href="project-details.html">Corporate Software Solutions</a></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-item two marketing">
+                        <div class="gallery-item">
+                            <div class="gallery-thumb">
+                                <img src="{{ asset('build/images/gallery/gallery-12.png') }}" alt="gallery">
+                                <div class="gallery-thumb-overlay">
+                                    <div class="gallery-icon">
+                                        <a class="img-popup" data-rel="lightcase:myCollection"
+                                           href="{{ asset('build/images/gallery/gallery-9.png') }}"><img
+                                                    src="{{ asset('build/images/icon/icon-21.png') }}" alt="icon"></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="gallery-content">
+                                <span class="sub-title">BRANDING ILLUSTRATION</span>
+                                <h3 class="title"><a href="project-details.html">Ecommerce Solutions</a></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {{ include('partials/_footer.index.html.twig') }}
+{% endblock %}

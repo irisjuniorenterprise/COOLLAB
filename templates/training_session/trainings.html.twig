@@ -1,0 +1,377 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <body>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Preloader
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <div class="preloader">
+        <div class="drawing" id="loading">
+            <div class="loading-dot"></div>
+        </div>
+    </div>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Preloader
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+    {{ include('partials/_cursor.index.html.twig') }}
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Header
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    {{ include('partials/_header.index.pages.html.twig') }}
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Header
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        Start Banner
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <section class="banner-section two inner">
+        <div class="banner-element-four two">
+            <img src="assets/images/element/element-5.png" alt="element">
+        </div>
+        <div class="banner-element-five two">
+            <img src="assets/images/element/element-7.png" alt="element">
+        </div>
+        <div class="banner-element-nineteen two">
+            <img src="assets/images/element/element-6.png" alt="element">
+        </div>
+        <div class="banner-element-twenty-two two">
+            <img src="assets/images/element/element-69.png" alt="element">
+        </div>
+        <div class="banner-element-twenty-three two">
+            <img src="assets/images/element/element-70.png" alt="element">
+        </div>
+        <div class="container">
+            <div class="row justify-content-center align-items-center mb-30-none">
+                <div class="col-xl-12 mb-30">
+                    <div class="banner-content two">
+                        <div class="banner-content-header">
+                            <h2 class="title">Blog Classic</h2>
+                            <div class="breadcrumb-area">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Blog Classic</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Banner
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Scroll-To-Top
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <a href="#" class="scrollToTop"><i class="las la-angle-double-up"></i></a>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Scroll-To-Top
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Blog
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <section class="blog-section ptb-120">
+        <div class="container">
+            <div class="row justify-content-center mb-60-none">
+                <div class="col-xl-4 col-lg-4 mb-60">
+                    <div class="sidebar">
+                        <form class="contact-form" method="post"
+                              action="{{ path('app_training_session_training_filtered') }}">
+                            <div class="widget-box mb-30">
+                                <h4 class="widget-title">Categories</h4>
+                                <div class="category-widget-box">
+                                    <div class="form-group mb-5">
+                                        <div class="contact-select">
+                                            <select name="categoryFilter" style="z-index: 99999" class="form--control">
+                                                {% for category in categories %}
+                                                    <option value="{{ category.id }}">{{ category.name }}
+                                                        <span>( {{ category.trainingSessions.count }} )</span></option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <h4 class="widget-title mt-5">Régions</h4>
+                                    <div class="form-group">
+                                        <div class="contact-select">
+                                            <select name="cityFilter" style="z-index: 99999" class="form--control">
+                                                {% for city in cities %}
+                                                    <option value="{{ city['city'] }}">{{ city['city'] }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <br><br><br>
+                                    <div class="form-group">
+                                        <div data-role="rangeslider">
+                                            <label for="price-min"><span class="min-value">100s</span><span
+                                                        class="max-value">1000s</span></label>
+
+                                            <span class="from">From</span><input type="range" name="price-min"
+                                                                                 value="100" min="0" max="1000"
+                                                                                 class="form__input">
+
+                                            <span class="to">To</span><input type="range" name="price-max" value="1000"
+                                                                             min="0" max="1000">
+
+                                        </div>
+                                    </div>
+                                    <br><br><br>
+                                    <div class="from-group">
+                                        <div class="switch-button">
+                                            <input name="expiredCheck" class="switch-button-checkbox" checked
+                                                   type="checkbox"></input>
+                                            <label class="switch-button-label" for=""><span
+                                                        class="switch-button-label-span text-white">Photo</span></label>
+                                        </div>
+                                    </div>
+                                    <div class="from-group">
+                                        <div class="form-range-filter">
+                                            <h3 class="heading">Prix</h3>
+                                            <div class="form-group">
+                                                <div class="slider-label -thumb">
+                                                    <span class="center -price">0</span>
+                                                </div>
+                                                <div class="form-slider -price" data-js-form-slider="true">
+                                                    <input name="priceFilter" class="field" max="500" min="100"
+                                                           type="range" value="350"></input>
+                                                    <span class="fill"></span>
+                                                </div>
+                                                <div class="slider-label">
+                                                    <span class="left -price"> 100</span>
+                                                    <span class="right -price"> 500</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="widget-box">
+                                <h4 class="widget-title">Tags</h4>
+                                <div class="tag-widget-box">
+                                    <ul class="tag-list">
+                                        <li><a href="#0">infobpn</a></li>
+                                        <li><a href="#0">driver</a></li>
+                                        <li><a href="#0">newdriver</a></li>
+                                        <li><a href="#0">Gallery</a></li>
+                                        <li><a href="#0">manual</a></li>
+                                        <li><a href="#0">Office</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <label class="mt-5">
+                                <input type="submit">
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-xl-8 col-lg-8 mb-60">
+                    <div class="row justify-content-center mb-60-none">
+                        <div class="col-xl-12 mb-60">
+                            <div class="blog-item">
+                                <div class="blog-thumb">
+                                    <img src="assets/images/blog/blog-big-1.png" alt="blog">
+                                </div>
+                                <div class="blog-content">
+                                    <div class="blog-post-meta">
+                                        <span class="user">By : Smith Roy</span>
+                                        <span class="category two">24th March, 2021</span>
+                                    </div>
+                                    <h3 class="title"><a href="blog-details.html">Many important brands have given us
+                                            their trust</a></h3>
+                                    <p>Integer dis ads se purus sollicitudin dapibus et vivamus pharetra sit integer
+                                        dictum in dise natoque an mus quis in.</p>
+                                    <div class="blog-btn">
+                                        <a href="blog-details.html" class="custom-btn">Read More <i
+                                                    class="fas fa-arrow-right ml-2"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-12 mb-60">
+                            <div class="blog-item">
+                                <div class="blog-thumb">
+                                    <img src="assets/images/blog/blog-big-2.png" alt="blog">
+                                    <div class="blog-classic-video">
+                                        <div class="video-main">
+                                            <a class="video-icon video" data-rel="lightcase:myCollection"
+                                               href="https://www.youtube.com/embed/6zsr22OeF2I">
+                                                <i class="fas fa-play"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="blog-content">
+                                    <div class="blog-post-meta">
+                                        <span class="user">By : Smith Roy</span>
+                                        <span class="category two">24th March, 2021</span>
+                                    </div>
+                                    <h3 class="title"><a href="blog-details.html">Guest Profile: Will Thornton, Author
+                                            of Are We There Yet?</a></h3>
+                                    <p>Integer dis ads se purus sollicitudin dapibus et vivamus pharetra sit integer
+                                        dictum in dise natoque an mus quis in.</p>
+                                    <div class="blog-btn">
+                                        <a href="blog-details.html" class="custom-btn">Read More <i
+                                                    class="fas fa-arrow-right ml-2"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-12 mb-60">
+                            <div class="blog-item">
+                                <div class="blog-thumb">
+                                    <img src="assets/images/blog/blog-big-3.png" alt="blog">
+                                </div>
+                                <div class="blog-content">
+                                    <div class="blog-post-meta">
+                                        <span class="user">By : Smith Roy</span>
+                                        <span class="category two">24th March, 2021</span>
+                                    </div>
+                                    <h3 class="title"><a href="blog-details.html">The 13 Real Traffic Safety Questions
+                                            We Should Be Asking</a></h3>
+                                    <p>Integer dis ads se purus sollicitudin dapibus et vivamus pharetra sit integer
+                                        dictum in dise natoque an mus quis in.</p>
+                                    <div class="blog-btn">
+                                        <a href="blog-details.html" class="custom-btn">Read More <i
+                                                    class="fas fa-arrow-right ml-2"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <nav>
+                    <ul class="pagination">
+                        <li class="page-item prev">
+                            <a class="page-link" href="#" rel="prev" aria-label="Prev &raquo;">PREV</a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">01</a></li>
+                        <li class="page-item active" aria-current="page"><span class="page-link">02</span></li>
+                        <li class="page-item"><a class="page-link" href="#">03</a></li>
+                        <li class="page-item"><a class="page-link" href="#">04</a></li>
+                        <li class="page-item"><a class="page-link" href="#">05</a></li>
+                        <li class="page-item next">
+                            <a class="page-link" href="#" rel="next" aria-label="Next &raquo;">NEXT</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Blog
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Footer
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <footer class="footer-section pt-120">
+        <div class="footer-element-one">
+            <img src="assets/images/element/element-48.png" alt="element">
+        </div>
+        <div class="footer-element-two">
+            <img src="assets/images/element/element-39.png" alt="element">
+        </div>
+        <div class="footer-element-three">
+            <img src="assets/images/element/element-40.png" alt="element">
+        </div>
+        <div class="footer-element-four">
+            <img src="assets/images/element/element-7.png" alt="element">
+        </div>
+        <div class="footer-element-five">
+            <img src="assets/images/element/element-41.png" alt="element">
+        </div>
+        <div class="footer-element-six">
+            <img src="assets/images/element/element-42.png" alt="element">
+        </div>
+        <div class="footer-element-seven">
+            <img src="assets/images/element/element-39.png" alt="element">
+        </div>
+        <div class="container">
+            <div class="row mb-30-none">
+                <div class="col-xl-4 col-lg-4 col-md-6 mb-30">
+                    <div class="footer-widget">
+                        <div class="footer-logo">
+                            <a class="site-logo site-title" href="index.html"><img src="assets/images/logo-two.png"
+                                                                                   alt="site-logo"></a>
+                        </div>
+                        <p>Treker was founded in 1991 by a group of safety-focused professionals who created The Wingman
+                            Standard for rigorously vetting air charter operators.</p>
+                        <ul class="footer-social">
+                            <li><a href="#0"><i class="fab fa-facebook-f"></i></a></li>
+                            <li><a href="#0"><i class="fab fa-twitter"></i></a></li>
+                            <li><a href="#0"><i class="fab fa-google-plus-g"></i></a></li>
+                            <li><a href="#0"><i class="fab fa-instagram"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-6 mb-30">
+                    <div class="footer-widget">
+                        <h5 class="title">About us</h5>
+                        <ul class="footer-list">
+                            <li><a href="#0">About Us</a></li>
+                            <li><a href="#0">Community Blog</a></li>
+                            <li><a href="#0">Rewards</a></li>
+                            <li><a href="#0">Work with Us</a></li>
+                            <li><a href="#0">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-6 mb-30">
+                    <div class="footer-widget">
+                        <h4 class="title">Explore Softim</h4>
+                        <ul class="footer-list">
+                            <li><a href="#0">Account</a></li>
+                            <li><a href="#0">Privacy Policy</a></li>
+                            <li><a href="#0">Affilitate</a></li>
+                            <li><a href="#0">Program</a></li>
+                            <li><a href="#0">Our Partner</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-lg-2 col-md-6 mb-30">
+                    <div class="footer-widget">
+                        <h4 class="title">Quick Links</h4>
+                        <ul class="footer-list">
+                            <li><a href="#0">About us</a></li>
+                            <li><a href="#0">News & press</a></li>
+                            <li><a href="#0">Blog</a></li>
+                            <li><a href="#0">FAQs</a></li>
+                            <li><a href="#0">Careers</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-wrapper">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xl-12 text-center">
+                        <div class="copyright-area">
+                            <p>Copyright © 2022 <a href="index.html">Softim</a>. All Rights Reserved. Designed by
+                                ThemeIM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Footer
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+    </body>
+{% endblock %}

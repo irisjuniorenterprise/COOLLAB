@@ -1,0 +1,54 @@
+{% extends 'adminDashboard/base.html.twig' %}
+
+{% block title %}New TrainingSession{% endblock %}
+
+{% block body %}
+    {{ include('partials/_header.html.twig') }}
+    {{ include('partials/_sidebar.html.twig') }}
+    <div class="container-fluid pt-4 px-4">
+        <div class="row g-4">
+            <div class="">
+                <div class="bg-light rounded h-100 p-4">
+                    {% for message in app.flashes('danger') %}
+                        <div class="flash-notice alert-danger p-2">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                    {{ form_start(form, { 'attr': {'role': 'form', 'enctype': 'multipart/form-data'} }) }}
+                    <div class="mb-3">
+                        {{ form_row(form.name) }}
+                        {{ form_row(form.description) }}
+                        {{ form_row(form.place) }}
+                        {{ form_row(form.startDate) }}
+                        {{ form_row(form.endDate) }}
+                        {{ form_row(form.price) }}
+                        {{ form_row(form.link) }}
+                        {{ form_row(form.linkForm) }}
+                        {{ form_row(form.requirement) }}
+                        {{ form_row(form.category) }}
+                        <div class="form-floating mb-3">
+                            <select name="trainerSelect" aria-label="select example" class="form-select" id="floatingSelect"
+                                    aria-label="Floating label select example">
+                                <option selected>Choisissez un formateur</option>
+                                {% for trainer in trainers %}
+                                    <option value="{{ trainer.id }}">{{ trainer.fullName }}</option>
+                                {% endfor %}
+                            </select>
+                            <div class="mb-3">
+                                <label for="trainingThumbnail" class="form-label">Thumbnail</label>
+                                <input required type="file" class="form-control" id="trainingThumbnail" name="trainingThumbnail">
+                            </div>
+                            <div class="mb-3">
+                                <label for="trainerPayment" class="form-label">Paiment</label>
+                                <input type="number" class="form-control" id="trainerPayment" name="trainerPayment">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline-primary">{{ button_label|default('Ajouter') }}</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <a class="btn btn-outline-primary" href="{{ path('app_training_session_index') }}">Retour à la liste</a>
+{% endblock %}

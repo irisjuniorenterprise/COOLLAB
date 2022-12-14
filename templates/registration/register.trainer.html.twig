@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registre{% endblock %}
+
+{% block body %}
+    <body>
+
+    <div class="container-fluid">
+        <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
+            <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
+                <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
+                    {{ form_start(registrationForm) }}
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        {#<a href="#" class="">
+                            <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DASHMIN</h3>
+                        </a>#}
+                        <h3>Registre en tant que formateur</h3>
+                    </div>
+                    {# {% if error %}
+                            <div class="alert-danger p-2 mb-4">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %} #}
+                    {% for flash in app.flashes('success') %}
+                        <div class="alert alert-success">{{ flash }}</div>
+                    {% endfor %}
+                    <div class="form-floating mb-3">
+                        {{ form_row(registrationForm.email) }}
+                    </div>
+                    <div class="form-floating mb-4">
+                        {{ form_row(registrationForm.plainPassword, {
+                            label: 'Password'
+                        }) }}
+                    </div>
+                    <div class="form-floating mb-4">
+                        {{ form_row(registrationForm.phone) }}
+                    </div>
+                    <div class="form-floating mb-4">
+                        {{ form_row(registrationForm.firstName) }}
+                    </div>
+                    <div class="form-floating mb-4">
+                        {{ form_row(registrationForm.lastName) }}
+                    </div>
+                    <div class="form-floating mb-4">
+                        {{ form_row(registrationForm.address) }}
+                    </div>
+                    <div class="form-floating mb-4">
+                        {{ form_row(registrationForm.cin) }}
+                    </div>
+                    <div class="form-floating mb-4">
+                        <label for="club">Club</label>
+{#
+                        <small id="emailHelp" class="form-text text-muted">Veuillez séparer chacun club par une ( , ).</small>
+#}
+                        <input type="text" class="form-control" id="club" name="club" placeholder="Veuillez séparer chacun club par une ( , ).">
+                    </div>
+                    <div class="form-floating mb-4">
+                        <label for="club">Expérience</label>
+{#
+                        <small id="emailHelp" class="form-text text-muted">Veuillez séparer chacune des sociétés par une ( , ).</small>
+#}
+                        <input type="text" class="form-control" id="work" name="work" placeholder="Veuillez séparer chacune des sociétés par une ( , ).">
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <div class="form-check">
+                            {{ form_row(registrationForm.agreeTerms) }}
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Sign In</button>
+                    {# <p class="text-center mb-0">Don't have an Account? <a href="">Sign Up</a></p> #}
+                    {{ form_end(registrationForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+{% endblock %}

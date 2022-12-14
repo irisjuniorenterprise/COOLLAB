@@ -81,9 +81,32 @@
 
 .content {
     margin-left: 250px;
-    min-height: 100vh;
     background: #FFFFFF;
     transition: 0.5s;
+}
+.container-fluid {
+    width: 70% !important;
+}
+.mod {
+    width: 70% !important;
+    float: right!important;
+}
+.remove-image {
+    display: none;
+    position: relative;
+    top: -30px;
+    right: 25px;
+    border-radius: 10em;
+    padding: 2px 6px 3px;
+    text-decoration: none;
+    font: 700 21px/20px sans-serif;
+    background: rgba(85, 85, 85, 0.55);
+    border: 1px solid #fff;
+    color: #FFF;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5), inset 0 2px 4px rgba(0,0,0,0.3);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    -webkit-transition: background 0.5s;
+    transition: background 0.5s;
 }
 
 @media (min-width: 992px) {

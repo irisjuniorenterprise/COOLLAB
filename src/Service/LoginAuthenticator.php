@@ -3,6 +3,7 @@ namespace App\Service;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Security;
@@ -14,12 +15,12 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordC
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 
 /**
- * @method getTargetPath(\Symfony\Component\HttpFoundation\Session\SessionInterface $getSession, string $firewallName)
+ * @method getTargetPath(SessionInterface $getSession, string $firewallName)
  */
 class LoginAuthenticator extends AbstractLoginFormAuthenticator
 {
 
-    public const LOGIN_ROUTE = 'login_admin';
+    public const LOGIN_ROUTE = 'login_users';
     private RouterInterface $router;
 
     public function __construct(RouterInterface $router)
@@ -29,12 +30,12 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
 
     public function authenticate(Request $request): Passport
     {
-        $email = $request->request->get('email');
+        $email = $request->request->get('_username');
         $request->getSession()->set(Security::LAST_USERNAME, $email);
 
         return new Passport(
             new UserBadge($email),
-            new PasswordCredentials($request->request->get('password')),
+            new PasswordCredentials($request->request->get('_password')),
             [
                 new CsrfTokenBadge(
                     'authenticate',
@@ -48,12 +49,17 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?RedirectResponse
     {
-        if ($target = $this->getTargetPath($request->getSession(), $firewallName)) {
+        /*if ($target = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($target);
+        }*/
+        $roles = $token->getUser()?->getRoles();
+        if (in_array('ROLE_ADMIN', $roles, true)) {
+            return new RedirectResponse(
+                $this->router->generate('app_training_session_index')
+            );
         }
-
         return new RedirectResponse(
-            $this->router->generate('app_admin')
+            $this->router->generate('app_home')
         );
     }
     protected function getLoginUrl(Request $request): string

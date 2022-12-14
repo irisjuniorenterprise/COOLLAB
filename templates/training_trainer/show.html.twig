@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TrainingTrainer{% endblock %}
+
+{% block body %}
+    <h1>TrainingTrainer</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ training_trainer.id }}</td>
+            </tr>
+            <tr>
+                <th>RequestedBy</th>
+                <td>{{ training_trainer.requestedBy ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>RequestedAt</th>
+                <td>{{ training_trainer.requestedAt ? training_trainer.requestedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>IsTrainerPayed</th>
+                <td>{{ training_trainer.isTrainerPayed ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>TrainerPayment</th>
+                <td>{{ training_trainer.trainerPayment }}</td>
+            </tr>
+            <tr>
+                <th>PayedAt</th>
+                <td>{{ training_trainer.payedAt ? training_trainer.payedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_training_trainer_index') }}">back to list</a>
+
+    <a href="{{ path('app_training_trainer_edit', {'id': training_trainer.id}) }}">edit</a>
+
+    {{ include('training_trainer/_delete_form.html.twig') }}
+{% endblock %}

@@ -765,8 +765,8 @@ blockquote .quote-icon {
 }
 
 .box-shadow {
-  -webkit-box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
-          box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+  -webkit-box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.26);
+          box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
 }
 
 .dark {
@@ -3409,6 +3409,144 @@ option {
   z-index: 999;
   background-color: transparent;
 }
+.header-section-pages {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  background: transparent linear-gradient(241deg, #9DBAFE 0%, #3467E4 100%) 0% 0% no-repeat padding-box!important;
+}
+.switch-button {
+  background: #9DBAFEFF;
+  border-radius: 30px;
+  width: 240px;
+  text-align: center;
+  font-size: 18px;
+  letter-spacing: 1px;
+  color: #155fff;
+  position: relative;
+  padding-right: 120px;
+  position: relative;
+}
+.switch-button:before {
+  content: "Video";
+  position: absolute;
+  color: #fff;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  pointer-events: none;
+}
+.switch-button-checkbox {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 2;
+}
+.switch-button-checkbox:checked + .switch-button-label:before {
+  transform: translateX(120px);
+  transition: transform 300ms linear;
+}
+.switch-button-checkbox + .switch-button-label {
+  position: relative;
+  padding: 15px 0;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+}
+.switch-button-checkbox + .switch-button-label:before {
+  content: "";
+  background: #3467E4FF;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 30px;
+  transform: translateX(0);
+  transition: transform 300ms;
+}
+.form-range-filter {
+  border-radius: 4px;
+}
+.form-range-filter > .heading {
+  margin: 0 0 16px;
+}
+.form-slider {
+  position: relative;
+}
+
+.form-slider > .field {
+  -webkit-appearance: none;
+  margin: 0;
+  width: 100%;
+}
+.form-slider > .field:focus {
+  outline: none;
+}
+.form-slider > .field::-webkit-slider-runnable-track {
+  height: 6px;
+  cursor: pointer;
+  animate: 0.2s;
+  border-radius: 12px;
+  background: rgba(0, 147, 238, 0.25);
+}
+.form-slider > .field::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: #0093ee;
+  margin-top: -5px;
+  cursor: pointer;
+}
+.form-slider > .field::-moz-range-track {
+  height: 6px;
+  cursor: pointer;
+  animate: 0.2s;
+  border-radius: 12px;
+  background: rgba(0, 147, 238, 0.25);
+}
+.form-slider > .field::-moz-range-thumb {
+  height: 16px;
+  width: 16px;
+  border: 0;
+  border-radius: 50%;
+  background: #0093ee;
+  margin-top: -5px;
+  cursor: pointer;
+}
+.slider-label > .left, .slider-label > .right {
+  font-size: 0.8em;
+  color: #000000;
+  margin-top: 4px;
+}
+.slider-label > .right {
+  float: right;
+}
+.slider-label > .-price::before {
+  content: 'DT ';
+  display: inline-block;
+}
+.slider-label.-thumb > .center {
+  color: #567086;
+}
+
+.switch-button-checkbox + .switch-button-label .switch-button-label-span {
+  position: relative;
+}
+
 .header-section.home-three {
   background-color: #fff;
 }
@@ -4760,9 +4898,13 @@ option {
   position: relative;
   padding-top: 275px;
   padding-bottom: 148px;
-  background: transparent linear-gradient(241deg, #9DBAFE 0%, #3467E4 100%) 0% 0% no-repeat padding-box;
   overflow: hidden;
   z-index: 9;
+}
+.video-hero {
+  position: absolute;
+  top: 0;
+  width: 100%;
 }
 .banner-section .banner-shape {
   position: absolute;
@@ -9498,14 +9640,19 @@ div[class*=col]:nth-of-type(2n + 2) .project-item::after {
 }
 
 div[class*=col]:nth-of-type(4n + 2) .service-item {
-  margin-top: 80px;
+  margin-top: 0;
 }
 @media only screen and (max-width: 1199px) {
   div[class*=col]:nth-of-type(4n + 2) .service-item {
     margin-top: 0;
   }
 }
-
+.winner-one {
+  margin-top: 50px;
+}
+.winner-three {
+    margin-top: 80px;
+}
 div[class*=col]:nth-of-type(4n + 4) .service-item {
   margin-top: 80px;
 }
@@ -11969,16 +12116,7 @@ div[class*=col]:nth-of-type(4n + 4) .process-item .process-icon-area .process-ic
   margin-bottom: 0px;
   position: relative;
 }
-.agency-statistics-area .statistics-item .odo-title::before {
-  position: absolute;
-  content: "";
-  top: 30px;
-  left: 5px;
-  width: 24px;
-  height: 24px;
-  background-color: #F8D458;
-  border-radius: 50%;
-}
+
 @media only screen and (max-width: 991px) {
   .agency-statistics-area .statistics-item .odo-title::before {
     display: none;

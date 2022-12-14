@@ -1,0 +1,32 @@
+{% extends 'adminDashboard/base.html.twig' %}
+
+{% block title %}Category{% endblock %}
+
+{% block body %}
+    {{ include('partials/_header.html.twig') }}
+    {{ include('partials/_sidebar.html.twig') }}
+    <div>
+        <div class="table-responsive">
+            <table class="table mod">
+                <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ category.id }}</td>
+                    <td>{{ category.name }}</td>
+                    <td>
+                        <a href="{{ path('app_category_index') }}" class="btn btn-primary">back to list</a>
+                        <a href="{{ path('app_category_edit', {'id': category.id}) }}" class="btn btn-primary">edit</a>
+                        {{ include('category/_delete_form.html.twig') }}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

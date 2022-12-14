@@ -1,0 +1,64 @@
+{% extends 'adminDashboard/base.html.twig' %}
+
+{% block title %}Partner index{% endblock %}
+
+{% block body %}
+    {{ include('partials/_header.html.twig') }}
+    {{ include('partials/_sidebar.html.twig') }}
+    <!-- Recent Sales Start -->
+    <div class="container-fluid pt-4 px-4">
+        <div class="bg-light text-center rounded p-4">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h6 class="mb-0">Les Partenaires</h6>
+                <a class="btn btn-outline-primary" href="{{ path('app_partner_new') }}"><i class="fa-solid fa-plus"></i></a>
+            </div>
+            <form action="{{ path('app_partner_index') }}" method="get" class="mb-3">
+                <div class="input-group">
+                    <div class="form-outline">
+                        <input autofocus placeholder="Recherche..." value="{{ partnerSearch ?? '' }}" name="q" type="text" id="form1" class="form-control" />
+                    </div>
+                    <input type="submit" class="btn btn-outline-primary"/>
+                </div>
+            </form>
+            <div class="table-responsive">
+                <table class="table text-start align-middle table-bordered table-hover mb-0">
+                    <thead>
+                    <tr class="text-dark">
+                        <th scope="col" class="bg-info">Id</th>
+                        <th scope="col" class="bg-info">Nom</th>
+                        <th scope="col" class="bg-info">Logo</th>
+                        <th scope="col" class="bg-info">Ajouté le</th>
+                        <th scope="col" class="bg-info">Actions</th>
+                    </tr>
+                    </thead>
+                    <turbo-frame id="partner-list-{{ pager.currentPage }}" target="_top">
+                    <tbody>
+                    {% for partner in pager %}
+                        <tr>
+                            <td>{{ partner.id }}</td>
+                            <td>{{ partner.name }}</td>
+                            <td><img src="/uploads/partners/{{ partner.logo }}" alt="{{ partner.logo }}" width="100" height="auto"></td>
+                            <td>{{ partner.createdAt|date('j F Y') }}</td>
+                            <td>
+                                <a class="btn btn-outline-primary" href="{{ path('app_partner_edit', {'id': partner.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a class="btn">{{ include('partner/_delete_form.html.twig') }}</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    {% if pager.hasNextPage %}
+                        <turbo-frame
+                                id="partner-list-{{ pager.nextPage }}" target="_top"
+                                src="{{ pagerfanta_page_url(pager, pager.nextPage) }}"
+                                loading="lazy"
+                        ></turbo-frame>
+                    {% endif %}
+                    </tbody>
+                    </turbo-frame>
+                </table>
+            </div>
+            <br>
+            {{ pagerfanta(pager) }}
+        </div>
+    </div>
+    <!-- Recent Sales End -->
+{% endblock %}

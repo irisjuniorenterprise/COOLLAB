@@ -733,7 +733,29 @@ $(function () {
       $button.parent().find("input").val(newVal);
   });
 });
-  
+
+  $("[data-js-form-slider]", function () {
+    const el = $(this)
+    const field = el.find('.field')
+    const fill = el.find('.fill')
+    const label = el.find('.-thumb')
+    const min = field.attr('min') || 0
+    const max = field.attr('max') || 100
+
+    var value = field.val()
+    var fillVal = 100 * (value - min) / (max - min)
+
+    fill.css({"width": fillVal + "%"})
+    label.find('.center').text(" " + value + " ")
+
+    field.on('input', function () {
+      var value = field.val()
+      var fillVal = 100 * (value - min) / (max - min)
+
+      fill.css({"width": fillVal + "%"})
+      label.find('.center').text(" " + value + " ")
+    })
+  })
   
 
 })(jQuery);

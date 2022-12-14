@@ -1,0 +1,85 @@
+{% extends 'adminDashboard/base.html.twig' %}
+
+{% block title %}TrainingSession{% endblock %}
+
+{% block body %}
+    {{ include('partials/_header.html.twig') }}
+    {{ include('partials/_sidebar.html.twig') }}
+    <div>
+        <div class="table-responsive mb-5">
+            <table class="table mod">
+                <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ training_session.id }}</td>
+                </tr>
+                <tr>
+                    <th>Nom</th>
+                    <td>{{ training_session.name }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ training_session.description }}</td>
+                </tr>
+                <tr>
+                    <th>Localisation</th>
+                    <td>{{ training_session.place }}</td>
+                </tr>
+                <tr>
+                    <th>Date Début</th>
+                    <td>{{ training_session.startDate ? training_session.startDate|date('j F Y') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Date Fin</th>
+                    <td>{{ training_session.endDate ? training_session.endDate|date('j F Y') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Approuvé</th>
+                    <td>{{ training_session.isApproved ? 'Oui' : 'Non' }}</td>
+                </tr>
+                <tr>
+                    <th>Lien</th>
+                    <td>{{ training_session.link }}</td>
+                </tr>
+                <tr>
+                    <th>Lien du formulaire</th>
+                    <td>{{ training_session.linkForm }}</td>
+                </tr>
+                <tr>
+                    <th>Annulé</th>
+                    <td>{{ training_session.isCanceled ? 'Oui' : 'Non' }}</td>
+                </tr>
+                <tr>
+                    <th>Prix</th>
+                    <td>{{ training_session.price }}</td>
+                </tr>
+                <tr>
+                    <th>Rate</th>
+                    <td>{{ training_session.rate }}</td>
+                </tr>
+                <tr>
+                    <th>Requirement</th>
+                    <td>{{ training_session.requirement }}</td>
+                </tr>
+                <tr>
+                    <th>Images</th>
+                    <td>
+                        {% for image in training_session.images %}
+                            <img src="{{ asset('uploads/trainingSession/' ~ image.imageName) }}"
+                                 alt="{{ image.imageName }}" width="150px" height="auto">
+                            <a class="remove-image" href="{{ path('app_training_session_delete_image', {'id': training_session.id, 'imageId': image.id}) }}" style="display: inline;">&#215;</a>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td><a class="btn btn-outline-primary" href="{{ path('app_training_session_index') }}">Retour à la
+                            liste</a></td>
+                    <td><a class="btn btn-outline-primary"
+                           href="{{ path('app_training_session_edit', {'id': training_session.id}) }}">Modifier</a></td>
+                    {{ include('training_session/_delete_form.html.twig') }}
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

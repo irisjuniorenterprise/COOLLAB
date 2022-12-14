@@ -1,0 +1,30 @@
+{% extends 'adminDashboard/base.html.twig' %}
+
+{% block title %}New Competition{% endblock %}
+
+{% block body %}
+    {{ include('partials/_header.html.twig') }}
+    {{ include('partials/_sidebar.html.twig') }}
+    <div class="container-fluid pt-4 px-4">
+        <div class="row g-4">
+            <div class="col-12">
+                <div class="bg-light rounded h-100 p-4">
+                    <div class="table-responsive">
+
+                        {{ form_start(form, { 'attr': {'role': 'form', 'enctype': 'multipart/form-data'} }) }}
+                        {{ form_widget(form) }}
+
+                        <div class="mb-3">
+                            <label for="competitionThumbnail" class="form-label">Thumbnail</label>
+                            <input required type="file" class="form-control" id="competitionThumbnail" name="competitionThumbnail">
+                        </div>
+                        <button class="btn btn-outline-primary mb-3">{{ button_label|default('Ajouter') }}</button>
+
+                        {{ form_end(form) }}
+                        <a class="btn btn-outline-primary" href="{{ path('app_competition_index') }}">back to list</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

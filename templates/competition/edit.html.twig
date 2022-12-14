@@ -1,0 +1,31 @@
+{% extends 'adminDashboard/base.html.twig' %}
+
+{% block title %}Edit Competition{% endblock %}
+
+{% block body %}
+    {{ include('partials/_header.html.twig') }}
+    {{ include('partials/_sidebar.html.twig') }}
+    <div class="container-fluid pt-4 px-4">
+        <div class="table-responsive">
+            {% for message in app.flashes('danger') %}
+                <div class="flash-notice alert-danger p-2">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {{ form_start(form, { 'attr': {'role': 'form', 'enctype': 'multipart/form-data'} }) }}
+            {{ form_widget(form) }}
+            <div class="mb-3">
+                <label for="trainingFile" class="form-label">Multiple files input example</label>
+                <input name="competitionFiles[]" accept="image/*" class="form-control" type="file" id="trainingFile" multiple>
+            </div>
+            <button class="btn btn-outline-primary mb-3">{{ button_label|default('Modifier') }}</button>
+
+            {{ form_end(form) }}
+            <div class="d-flex justify-content-start">
+                <a class="btn btn-outline-primary" href="{{ path('app_competition_index') }}">Retour à la liste</a>
+                &emsp13;&emsp13;
+                {{ include('competition/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

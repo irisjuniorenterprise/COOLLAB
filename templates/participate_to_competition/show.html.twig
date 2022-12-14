@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ParticipateToCompetition{% endblock %}
+
+{% block body %}
+    <h1>ParticipateToCompetition</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ participate_to_competition.id }}</td>
+            </tr>
+            <tr>
+                <th>IsPresent</th>
+                <td>{{ participate_to_competition.isPresent ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>ParticipatedAt</th>
+                <td>{{ participate_to_competition.participatedAt ? participate_to_competition.participatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Classification</th>
+                <td>{{ participate_to_competition.classification }}</td>
+            </tr>
+            <tr>
+                <th>Prize</th>
+                <td>{{ participate_to_competition.prize }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_participate_to_competition_index') }}">back to list</a>
+
+    <a href="{{ path('app_participate_to_competition_edit', {'id': participate_to_competition.id}) }}">edit</a>
+
+    {{ include('participate_to_competition/_delete_form.html.twig') }}
+{% endblock %}

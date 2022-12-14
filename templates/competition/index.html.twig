@@ -1,0 +1,76 @@
+{% extends 'adminDashboard/base.html.twig' %}
+
+{% block title %}Competition index{% endblock %}
+
+{% block body %}
+    {{ include('partials/_header.html.twig') }}
+    {{ include('partials/_sidebar.html.twig') }}
+    <!-- Recent Sales Start -->
+    <div class="container-fluid pt-4 px-4">
+        <div class="bg-light text-center rounded p-4">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h6 class="mb-0">Les Compétitions</h6>
+                <a class="btn btn-outline-primary" href="{{ path('app_competition_new') }}"><i class="fa-solid fa-plus"></i></a>
+            </div>
+            <form action="{{ path('app_competition_index') }}" method="get" class="mb-3">
+                <div class="input-group">
+                    <div class="form-outline">
+                        <input autofocus placeholder="Recherche..." value="{{ competitionSearch ?? '' }}" name="q" type="text" id="form1" class="form-control" />
+                    </div>
+                    <input type="submit" class="btn btn-outline-primary"/>
+                </div>
+            </form>
+            <div class="table-responsive">
+                <table class="table text-start align-middle table-bordered table-hover mb-0">
+                    <thead>
+                    <tr class="text-dark">
+                        <th scope="col" class="bg-info">Id</th>
+                        <th scope="col" class="bg-info">NOm</th>
+                        <th scope="col" class="bg-info">Description</th>
+                        <th scope="col" class="bg-info">Localisation</th>
+                        <th scope="col" class="bg-info">Date début</th>
+                        <th scope="col" class="bg-info">Annulé</th>
+                        <th scope="col" class="bg-info">Prix</th>
+                        <th scope="col" class="bg-info">actions</th>
+                    </tr>
+                    </thead>
+                    <turbo-frame id="competition-list-{{ pager.currentPage }}" target="_top">
+                    <tbody>
+                    {% for competition in pager %}
+                        <tr>
+                            <td>{{ competition.id }}</td>
+                            <td>{{ competition.name }}</td>
+                            <td>{{ competition.description }}</td>
+                            <td>{{ competition.place }}</td>
+                            <td>{{ competition.startDate ? competition.startDate|date('j F Y') : '' }}</td>
+                            <td>{{ competition.isCanceled ? 'Yes' : 'No' }}</td>
+                            <td>{{ competition.price }}</td>
+                            <td>
+                                {% if competition.isCanceled == true %}
+                                <a class="btn btn-outline-primary" href="{{ path('app_competition_activate', {'id': competition.id}) }}">Réactiver</a>
+                                {% else %}
+                                <a class="btn btn-outline-primary" href="{{ path('app_competition_cancel', {'id': competition.id}) }}">Annuler</a>
+                                {% endif %}
+                                <a class="btn btn-outline-primary" href="{{ path('app_competition_edit', {'id': competition.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a class="btn btn-outline-primary" href="{{ path('app_competition_show', {'id': competition.id}) }}"><i class="fa-solid fa-eye"></i></a>
+                                <a class="btn">{{ include('competition/_delete_form.html.twig') }}</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    {% if pager.hasNextPage %}
+                        <turbo-frame
+                                id="competition-list-{{ pager.nextPage }}" target="_top"
+                                src="{{ pagerfanta_page_url(pager, pager.nextPage) }}"
+                                loading="lazy"
+                        ></turbo-frame>
+                    {% endif %}
+                    </tbody>
+                    </turbo-frame>
+                </table>
+            </div>
+            <br>
+            {{ pagerfanta(pager) }}
+        </div>
+    </div>
+    <!-- Recent Sales End -->
+{% endblock %}

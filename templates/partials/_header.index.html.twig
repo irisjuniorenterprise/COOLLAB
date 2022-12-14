@@ -1,0 +1,115 @@
+<header class="header-section">
+    <div class="header">
+        <div class="header-bottom-area">
+            <div class="container custom-container">
+                <div class="header-menu-content">
+                    <nav class="navbar navbar-expand-xl p-0">
+                        <a class="site-logo site-title" href="#"><img src="{{ asset('build/images/logo.png') }}" alt="site-logo"></a>
+                        <button class="navbar-toggler d-block d-xl-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="toggle-bar"></span>
+                        </button>
+                        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                            <div class="header-right">
+                                <div class="search-bar">
+                                    <form class="header-search-form">
+                                        <label for="header_search"></label><input type="search" name="keyword" id="header_search" placeholder="Search...">
+                                        <button class="header-search-btn"><i class="las la-search"></i></button>
+                                    </form>
+                                </div>
+                                <div class="header-links-area">
+                                    <ul class="header-links">
+                                        <li>
+                                            <a href="mailto:">
+                                                <div class="links-thumb">
+                                                    <img src="{{ asset('build/images/icon/icon-1.png') }}" alt="icon">
+                                                </div>
+                                                <span>info@softim.com</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="tel:+11256326501">
+                                                <div class="links-thumb">
+                                                    <img src="{{ asset('build/images/icon/icon-2.png') }}" alt="icon">
+                                                </div>
+                                                <span>+11 256 3265 01</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <button class="menu-toggler ml-auto">
+                                    <span class="toggle-bar"></span>
+                                </button>
+                                <div class="menu-toggler-wrapper">
+                                    <ul class="navbar-nav main-menu">
+                                        <li class="menu_has_children">
+                                            <a href="#">Home <i class="las la-angle-down"></i></a>
+                                            <ul class="sub-menu">
+                                                <li><a href="#">Home One</a></li>
+                                                <li><a href="#">Home Two</a></li>
+                                                <li><a href="#">Home Three</a></li>
+                                                <li><a href="#">Home Four</a></li>
+                                                <li><a href="#">Home Five</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="#">About</a></li>
+                                        <li class="menu_has_children">
+                                            <a href="#">Services <i class="las la-angle-down"></i></a>
+                                            <ul class="sub-menu">
+                                                <li><a href="#">Service One</a></li>
+                                                <li><a href="#">Service Two</a></li>
+                                                <li><a href="#">Service Details</a></li>
+                                                <li><a href="#">Service Details Two</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="#">Portfolio</a></li>
+                                        <li class="menu_has_children">
+                                            <a href="#">Pages <i class="las la-angle-down"></i></a>
+                                            <ul class="sub-menu">
+                                                <li><a href="#">Project</a></li>
+                                                <li><a href="#">Project Details</a></li>
+                                                <li><a href="#">Product</a></li>
+                                                <li><a href="#">Product Details</a></li>
+                                                <li><a href="#">Cart</a></li>
+                                                <li><a href="#">Team</a></li>
+                                                <li><a href="#">Team Details</a></li>
+                                                <li><a href="#">Pricing Plan</a></li>
+                                                <li><a href="#">FAQ</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="menu_has_children">
+                                            <a href="#">Blog <i class="las la-angle-down"></i></a>
+                                            <ul class="sub-menu">
+                                                <li><a href="#">Blog</a></li>
+                                                <li><a href="#">Blog Classic</a></li>
+                                                <li><a href="#">Blog Details</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="#">Formations</a></li>
+                                        <li class="menu_has_children">
+                                            <a href="#">Connexion <i class="las la-angle-down"></i></a>
+                                            <ul class="sub-menu">
+                                                {% if user is not null %}
+                                                <li><a href="{{ path('app_logout') }}">Logout</a></li>
+                                                {% else %}
+                                                    <li><a href="{{ path('login_users') }}">Login</a></li>
+                                                {% endif %}
+                                                <li><a href="{{ path('app_register') }}">Sign up</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="#">Contact</a></li>
+                                    </ul>
+                                </div>
+                                <div class="header-action-area">
+                                    <div class="header-action">
+                                        <a href="#" class="btn--base">GET STARTED</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

@@ -1,0 +1,28 @@
+{% extends 'adminDashboard/base.html.twig' %}
+
+{% block title %}New Category{% endblock %}
+
+{% block body %}
+    {{ include('partials/_header.html.twig') }}
+    {{ include('partials/_sidebar.html.twig') }}
+    <div class="container-fluid pt-4 px-4">
+        <div class="row g-4">
+            <div class="col-sm-12 col-xl-6">
+                <div class="bg-light rounded h-100 p-4">
+                    {% for message in app.flashes('danger') %}
+                        <div class="flash-notice alert-danger p-2">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                    {{ form_start(form) }}
+                    <div class="mb-3">
+                        {{ form_row(form.name) }}
+                    </div>
+                    <button class="btn btn-outline-primary">{{ button_label|default('Ajouter') }}</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="{{ path('app_category_index') }}">Retour à la liste</a>
+{% endblock %}

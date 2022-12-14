@@ -1,0 +1,76 @@
+{% extends 'adminDashboard/base.html.twig' %}
+
+{% block title %}Competition{% endblock %}
+
+{% block body %}
+    {{ include('partials/_header.html.twig') }}
+    {{ include('partials/_sidebar.html.twig') }}
+    <div>
+        <div class="table-responsive">
+            <table class="table mod">
+                <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ competition.id }}</td>
+                </tr>
+                <tr>
+                    <th>Nom</th>
+                    <td>{{ competition.name }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ competition.description }}</td>
+                </tr>
+                <tr>
+                    <th>Localisation</th>
+                    <td>{{ competition.place }}</td>
+                </tr>
+                <tr>
+                    <th>Date début</th>
+                    <td>{{ competition.startDate ? competition.startDate|date('j F Y') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Date fin</th>
+                    <td>{{ competition.endDate ? competition.endDate|date('j F Y') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Annulé</th>
+                    <td>{{ competition.isCanceled ? 'Oui' : 'Non' }}</td>
+                </tr>
+                <tr>
+                    <th>Prix</th>
+                    <td>{{ competition.price }}</td>
+                </tr>
+                <tr>
+                    <th>Images</th>
+                    <td>
+                        {% if competition.imageCompetitions.count == 0 %}
+                            <p>Aucune image pour cette compétition</p>
+                        {% endif %}
+                        {% for image in competition.imageCompetitions %}
+                            <img src="{{ asset('uploads/competitions/' ~ image.imageName) }}"
+                                 alt="{{ image.imageName }}" width="150px" height="auto">
+                            <a class="remove-image"
+                               href="{{ path('app_competition_delete_image', {'id': competition.id, 'imageId': image.id}) }}"
+                               style="display: inline;">&#215;</a>
+                        {% endfor %}
+                    </td>
+                </tr>
+                {# <tr>
+                    <th>Guest</th>
+                    <td>{{ competition.guest ? competition.guest|join(', ') : '' }}</td>
+                </tr> #}
+                <tr>
+                    <td><a class="btn btn-outline-primary" href="{{ path('app_competition_index') }}">Retour à la
+                            liste</a>
+                    </td>
+                    <td><a class="btn btn-outline-primary"
+                           href="{{ path('app_competition_edit', {'id': competition.id}) }}">Modifier</a>
+                    </td>
+                    {{ include('competition/_delete_form.html.twig') }}
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
