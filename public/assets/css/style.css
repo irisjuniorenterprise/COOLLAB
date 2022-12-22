@@ -11695,18 +11695,21 @@ div[class*=col]:nth-of-type(4n + 4) .process-item .process-icon-area .process-ic
       flex-wrap: wrap;
   margin-bottom: 40px;
 }
-.product-reply-item:nth-child(even) {
+/*.product-reply-item:nth-child(even) {
   margin-left: 60px;
-}
-@media only screen and (max-width: 440px) {
+}*/
+/*@media only screen and (max-width: 440px) {
   .product-reply-item:nth-child(even) {
     margin-left: 20px;
   }
-}
+}*/
 @media only screen and (max-width: 400px) {
   .product-reply-item:nth-child(even) {
     display: block;
   }
+}
+.product-reply-item:nth-child(even){
+  margin-left: 0!important;
 }
 .product-reply-item .product-reply-thumb {
   width: 70px;

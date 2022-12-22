@@ -51,6 +51,9 @@ class Competition
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $thumbnail = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $city = null;
+
     public function __construct()
     {
         $this->participateToCompetitions = new ArrayCollection();
@@ -226,6 +229,18 @@ class Competition
     public function setThumbnail(?string $thumbnail): self
     {
         $this->thumbnail = $thumbnail;
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(?string $city): self
+    {
+        $this->city = $city;
 
         return $this;
     }

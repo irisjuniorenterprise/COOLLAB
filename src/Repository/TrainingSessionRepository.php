@@ -115,16 +115,27 @@ class TrainingSessionRepository extends ServiceEntityRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
-    public function findFilteredTrainingSessions($categoryFilter, $cityFilter, $priceFilter, $expiredCheck): array
+    public function findFilteredTrainingSessions($categoryFilter, $cityFilter, $priceFilter, $expiredCheck): QueryBuilder
     {
-        $queryBuilder = $this->createQueryBuilder('training_session')->select('training_session');
+        $queryBuilder = $this->addOrderByIdQueryBuilder();
+        //$queryBuilder = $this->createQueryBuilder('training_session')->select('training_session');
         if ($cityFilter!==''){$queryBuilder->andWhere('training_session.city LIKE :city')->setParameter('city', '%'.$cityFilter.'%');}
         if ($categoryFilter!==''){$queryBuilder->andWhere('training_session.category = :category')->setParameter('category', $categoryFilter);}
-        if ($priceFilter!=='0'){$queryBuilder->andWhere('training_session.price LIKE :price')->setParameter('price', '%'.$priceFilter.'%');}
-        if ($expiredCheck===true){$queryBuilder->andWhere('training_session.endDate > CURRENT_DATE()');}
-        if ($expiredCheck===false){$queryBuilder->andWhere('training_session.endDate < CURRENT_DATE()');}
+        if ($priceFilter==='under-50'){$queryBuilder->andWhere('training_session.price < 50');}
+        if ($priceFilter==='50-100'){$queryBuilder->andWhere('training_session.price BETWEEN 50 AND 100');}
+        if ($priceFilter==='over-100'){$queryBuilder->andWhere('training_session.price > 100');}
         $queryBuilder->andWhere('training_session.isApproved = true');
         $queryBuilder->andWhere('training_session.isCanceled = false');
+        return $queryBuilder;
+    }
+
+    // get training sessions for filter approved and not canceled and not expired
+    public function findFilteredTrainingSessionsApprovedNotCanceledNotExpired(): array
+    {
+        $queryBuilder = $this->addOrderByIdQueryBuilder();
+        $queryBuilder->andWhere('training_session.isApproved = true');
+        $queryBuilder->andWhere('training_session.isCanceled = false');
+        $queryBuilder->andWhere('training_session.endDate > CURRENT_DATE()');
         return $queryBuilder->getQuery()->getResult();
     }
 

@@ -1,0 +1,414 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <body>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Preloader
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <div class="preloader">
+        <div class="drawing" id="loading">
+            <div class="loading-dot"></div>
+        </div>
+    </div>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Preloader
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+    {{ include('partials/_cursor.index.html.twig') }}
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Header
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    {{ include('partials/_header.index.pages.html.twig') }}
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Header
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Banner
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <section class="banner-section two inner">
+        <div class="banner-element-four two">
+            <img src="assets/images/element/element-5.png" alt="element">
+        </div>
+        <div class="banner-element-five two">
+            <img src="assets/images/element/element-7.png" alt="element">
+        </div>
+        <div class="banner-element-nineteen two">
+            <img src="assets/images/element/element-6.png" alt="element">
+        </div>
+        <div class="banner-element-twenty-two two">
+            <img src="assets/images/element/element-69.png" alt="element">
+        </div>
+        <div class="banner-element-twenty-three two">
+            <img src="assets/images/element/element-70.png" alt="element">
+        </div>
+        <div class="container">
+            <div class="row justify-content-center align-items-center mb-30-none">
+                <div class="col-xl-12 mb-30">
+                    <div class="banner-content two">
+                        <div class="banner-content-header">
+                            <h2 class="title">Blog Single</h2>
+                            <div class="breadcrumb-area">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Blog Single</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Banner
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Scroll-To-Top
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <a href="#" class="scrollToTop"><i class="las la-angle-double-up"></i></a>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Scroll-To-Top
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Blog
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <section class="blog-section ptb-120">
+        <div class="container">
+            {% for flash in app.flashes('success') %}
+                <div class="alert alert-success">{{ flash }}</div>
+            {% endfor %}
+            <div class="row justify-content-center mb-60-none">
+                <div class="col-xl-4 col-lg-4 mb-60">
+                    <div class="sidebar">
+                        <div class="widget-box mb-30">
+                            <h4 class="widget-title">Nos Dérniers Formations</h4>
+                            <div class="popular-widget-box">
+                                {% for training in trainings[-6:] %}
+                                    <div class="single-popular-item d-flex flex-wrap align-items-center">
+                                        <div class="popular-item-thumb">
+                                            <img src="/uploads/trainingSession/thumbnail/{{ training.thumbnail }}"
+                                                 alt="{{ training.name }}">
+                                        </div>
+                                        <div class="popular-item-content">
+                                            <span class="blog-date">{{ training.startDate|date('j F Y') }}</span>
+                                            <h5 class="title"><a
+                                                        href="{{ path('app_training_session_details', { 'id': training.id }) }}">{{ training.name }}</a>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-8 col-lg-8 mb-60">
+                    <div class="row justify-content-center mb-60-none">
+                        <div class="col-xl-12 mb-60">
+                            <div class="blog-item details">
+                                <div class="blog-thumb">
+                                    <img src="/uploads/trainingSession/thumbnail/{{ training_session.thumbnail }}"
+                                         style="height: 380px!important;width: 769px!important;object-fit: inherit !important;"
+                                         width="769px" height="380px" alt="{{ training_session.name }}">
+                                </div>
+                                <div class="blog-content">
+                                    <div class="blog-post-meta">
+                                        <span class="user">Assuré par : {% for trainer in training_session.trainingTrainers %} {{ trainer.user.fullName }} {% endfor %}</span>
+                                        <span class="category two">{{ training_session.startDate|date('j F Y') }}</span>
+                                    </div>
+                                    <h3 class="title">{{ training_session.name }}</h3>
+                                    <p>{{ training_session.description }}</p>
+                                    {# <ul class="blog-list">
+                                        <li>Free Download Instagram Logo</li>
+                                        <li>Illustrator from Instagram Logo 9 Vectors svg vector collection</li>
+                                        <li>Vectors SVG vector illustration graphic art design format.</li>
+                                        <li>Following vectors are from the same pack as this vector also</li>
+                                        <li>Instagram Logo SVG Vector is a part of Social Websites</li>
+                                    </ul> #}
+                                    {# <div class="blog-widget-thumb-area">
+                                        <div class="row justify-content-center mb-20-none">
+                                            <div class="col-xl-6 col-lg-6 col-md-6 mb-20">
+                                                <div class="blog-widget-thumb">
+                                                    <img src="{{ asset('build/images/blog/blog-6.png') }}" alt="blog">
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 mb-20">
+                                                <div class="blog-widget-thumb">
+                                                    <img src="{{ asset('build/images/blog/blog-5.png') }}" alt="blog">
+                                                    <div class="blog-widget-video">
+                                                        <div class="video-main">
+                                                            <div class="promo-video">
+                                                                <div class="waves-block">
+                                                                    <div class="waves wave-1"></div>
+                                                                    <div class="waves wave-2"></div>
+                                                                    <div class="waves wave-3"></div>
+                                                                </div>
+                                                            </div>
+                                                            <a class="video-icon video" data-rel="lightcase:myCollection" href="https://www.youtube.com/embed/6zsr22OeF2I">
+                                                                <i class="fas fa-play"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> #}
+                                    {# training images slide #}
+                                    {% if images.count != 0 %}
+                                        <div class="blog-related-area">
+                                            <div class="row">
+                                                <div class="col-xl-12">
+                                                    <div class="blog-section-header">
+                                                        <div class="section-header">
+                                                            <h3 class="section-title">Images</h3>
+                                                        </div>
+                                                        <div class="slider-nav-area">
+                                                            <div class="slider-prev">
+                                                                <i class="fas fa-chevron-left"></i>
+                                                            </div>
+                                                            <div class="slider-next">
+                                                                <i class="fas fa-chevron-right"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row justify-content-center">
+                                                <div class="col-xl-12">
+                                                    <div class="blog-slider-area">
+                                                        <div class="blog-slider">
+                                                            <div class="swiper-wrapper">
+                                                                {% for image in images %}
+                                                                    <div class="swiper-slide">
+                                                                        <div class="blog-item">
+                                                                            <div class="blog-thumb">
+                                                                                <img src="/uploads/trainingSession/{{ image.imageName }}"
+                                                                                     alt="blog">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                {% endfor %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    {# training images slide #}
+                                    {# <blockquote>
+                                        <div class="quote-area d-flex flex-wrap">
+                                            <div class="quote-icon">
+                                                <i class="icon-Producing_Icone"></i>
+                                            </div>
+                                            <div class="quote-content-area">
+                                                <p class="quote-content">Producing Ideas Is The Main Way To Grow The Economy
+                                                    Life Insurance for Stay-at-Home Parents</p>
+                                                <span>JHON SMITH</span>
+                                            </div>
+                                        </div>
+                                    </blockquote> #}
+                                    <div class="blog-related-area">
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                <div class="blog-section-header">
+                                                    <div class="section-header">
+                                                        <h3 class="section-title">Meilleures formations connexes</h3>
+                                                    </div>
+                                                    <div class="slider-nav-area">
+                                                        <div class="slider-prev">
+                                                            <i class="fas fa-chevron-left"></i>
+                                                        </div>
+                                                        <div class="slider-next">
+                                                            <i class="fas fa-chevron-right"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-center">
+                                            <div class="col-xl-12">
+                                                <div class="blog-slider-area">
+                                                    <div class="blog-slider">
+                                                        <div class="swiper-wrapper">
+                                                            {% for related in related_trainings %}
+                                                                {% if related.id != training_session.id %}
+                                                                    <div class="swiper-slide">
+                                                                        <div class="blog-item">
+                                                                            <div class="blog-thumb">
+                                                                                <img src="/uploads/trainingSession/thumbnail/{{ related.thumbnail }}"
+                                                                                     alt="blog">
+                                                                            </div>
+                                                                            <div class="blog-content">
+                                                                                <div class="blog-post-meta">
+                                                                                    <span class="user">Assuré par : {% for trainer in training_session.trainingTrainers %} {{ trainer.user.fullName }} {% endfor %}</span>
+                                                                                    <span class="category two"> {{ training_session.startDate|date('j F Y') }}</span>
+                                                                                </div>
+                                                                                <h3 class="title"><a target="_blank"
+                                                                                                     href="{{ path('app_training_session_details', { 'id':related.id }) }}">{{ related.name }}</a>
+                                                                                </h3>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% for user_participated in training_session.participateToTrainingSessions %}
+                                        {#
+                                        {% if training_session.endDate > date() and user_participated.isPresent == true %}
+                                            <div class="blog-comment-area">
+                                                <h3 class="title">Commenter</h3>
+                                                <form class="comment-form" action="{{ path('app_training_session_comment', { 'id':training_session.id }) }}" method="post">
+                                                    <div class="row justify-content-center mb-25-none">
+                                                        <div class="col-lg-12 form-group">
+                                                            <textarea name="trainingComment" required class="form--control"
+                                                                      placeholder="Ecriver votre commentaire*"></textarea>
+                                                        </div>
+                                                        <div class="col-lg-12 form-group">
+                                                            <button type="submit" class="btn--base mt-10">Commenter <i
+                                                                        class="fas fa-arrow-right ml-2"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        {% endif %}
+                                        #}
+                                        {% if user.userIdentifier != user_participated.user.email and training_session.endDate > date() %}
+                                            <div class="col-lg-12 form-group mt-5">
+                                                <a href="{{ path('app_training_session_participate', { 'id':training_session.id }) }}">
+                                                    <button type="submit" class="btn--base mt-10">Participer<i
+                                                                class="fas fa-arrow-right ml-2"></i></button>
+                                                </a>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Blog
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <section class="product-information-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="information-wrapper">
+
+                        <div class="nav-parent">
+                            <ul class="nav nav-pills" id="pills-tab">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="pill" href="#review">Commentaires</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="review">
+                                <div class="product-reply-area">
+                                    <h3 class="title mb-40">Commentaires</h3>
+                                    <div class="product-reply-item-area">
+                                        {% for comment in comments %}
+                                            <div class="product-reply-item">
+                                                <div class="product-reply-thumb">
+                                                    <img src="assets/images/client/client-1.png" alt="user">
+                                                </div>
+                                                <div class="product-reply-content">
+                                                    <div class="product-reply-content-header">
+                                                        <h4 class="title text-capitalize">{{ comment.participateToTrainingSession.user.fullName }}</h4>
+                                                        <span class="date">{{ comment.commentedAt|date(('j F Y h:m')) }}</span>
+                                                    </div>
+                                                    <div class="reply-ratings">
+                                                        {% for i in 1..comment.participateToTrainingSession.rate %}
+                                                            {% if comment.participateToTrainingSession.rate != null %}
+                                                            <i class="fas fa-star"></i>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </div>
+                                                    <div class="product-reply-content-body">
+                                                        <p>{{ comment.content }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                {% for user_participated in training_session.participateToTrainingSessions %}
+                                    {% if training_session.endDate > date() and user_participated.isPresent == true %}
+                                        <div class="product-comment-area">
+                                            {% if rated == 0.0 %}
+                                                <form action="{{ path('app_training_session_rate', { 'id': training_session.id }) }}" class="comment-form" method="post">
+                                                    <div class="col-xl-12 col-lg-12 form-group rating">
+                                                        <button class="custom-btn mt-2 ml-5 text-capitalize" style="background-color: transparent!important;">évaluer <i
+                                                                    class="fas fa-arrow-right ml-2"></i></button>
+                                                        <input type="radio" id="star1" name="rating"
+                                                               value="5"/><label
+                                                                for="star1">&nbsp;</label>
+                                                        <input type="radio" id="star2" name="rating"
+                                                               value="4"/><label
+                                                                for="star2">&nbsp;</label>
+                                                        <input type="radio" id="star3" name="rating"
+                                                               value="3"/><label
+                                                                for="star3">&nbsp;</label>
+                                                        <input type="radio" id="star4" name="rating"
+                                                               value="2"/><label
+                                                                for="star4">&nbsp;</label>
+                                                        <input type="radio" id="star5" name="rating"
+                                                               value="1"/><label
+                                                                for="star5">&nbsp;</label>
+                                                    </div>
+                                                </form>
+                                            {% endif %}
+                                            <h3 class="title">Commenter</h3>
+                                            <form class="comment-form" method="post"
+                                                  action="{{ path('app_training_session_comment', { 'id':training_session.id }) }}">
+                                                <div class="row justify-content-center mb-30-none">
+                                                    <div class="col-lg-12 form-group">
+                                                        <label>Poster un commentaire</label>
+                                                        <textarea name="trainingComment" class="form--control"
+                                                                  placeholder="Votre commentaire"></textarea>
+                                                    </div>
+                                                    <div class="col-lg-12 form-group">
+                                                        <button type="submit" class="btn--base mt-10">Commenter <i
+                                                                    class="fas fa-arrow-right ml-2"></i></button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Footer
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    {{ include('partials/_footer.index.html.twig') }}
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Footer
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+    </body>
+{% endblock %}

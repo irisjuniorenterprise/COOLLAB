@@ -1,0 +1,27 @@
+{
+  "entrypoints": {
+    "app": {
+      "js": [
+        "/builder/runtime.1041728f.js",
+        "/builder/vendors-node_modules_core-js_internals_species-constructor_js-node_modules_core-js_modules_es-a52b29.c980965a.js",
+        "/builder/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_aos_dist_aos_js-node_-17e571.4edb7289.js",
+        "/builder/app.d057c0bb.js"
+      ],
+      "css": [
+        "/builder/app.1c4c5fc2.css"
+      ]
+    },
+    "admin_app": {
+      "js": [
+        "/builder/runtime.1041728f.js",
+        "/builder/vendors-node_modules_core-js_internals_species-constructor_js-node_modules_core-js_modules_es-a52b29.c980965a.js",
+        "/builder/vendors-node_modules_core-js_modules_es_array_concat_js-node_modules_core-js_modules_es_array-2d28f7.0e0626d9.js",
+        "/builder/admin_app.78efc48f.js"
+      ],
+      "css": [
+        "/builder/vendors-node_modules_core-js_modules_es_array_concat_js-node_modules_core-js_modules_es_array-2d28f7.5858b066.css",
+        "/builder/admin_app.4602f191.css"
+      ]
+    }
+  }
+}

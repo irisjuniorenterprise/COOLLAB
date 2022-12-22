@@ -21,7 +21,6 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/admin/training')]
 class TrainingSessionController extends AbstractController
 {
-
     // search training session by name or description or trainer name
     #[Route('/training/{page}', name: 'app_training_session_index', methods: ['GET', 'POST'])]
     public function search(Request $request, TrainingSessionRepository $trainingSessionRepository, int $page = 1): Response

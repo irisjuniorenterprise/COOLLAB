@@ -18,10 +18,7 @@ class IndexController extends AbstractController
             , [
                 'partners' => $partnerRepository->findAll(),
                 'competition'=> $competitionRepository->createOrderedByCompetitionDateQueryBuilder(),
-                'trainingSessions' => $trainingSessionRepository->findBy([
-                    'isApproved' => true,
-                    'isCanceled' => false,
-                ]),
+                'trainingSessions' => $trainingSessionRepository->findFilteredTrainingSessionsApprovedNotCanceledNotExpired(),
                 'user' => $this->getUser(),
             ]);
     }

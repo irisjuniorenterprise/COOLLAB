@@ -3430,7 +3430,7 @@ option {
   position: relative;
 }
 .switch-button:before {
-  content: "Video";
+  content: "Valable";
   position: absolute;
   color: #fff;
   top: 0;

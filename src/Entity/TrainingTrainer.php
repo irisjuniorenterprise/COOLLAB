@@ -22,8 +22,8 @@ class TrainingTrainer
     #[ORM\Column]
     private bool $isTrainerPayed = false;
 
-    #[ORM\Column]
-    private float $trainerPayment;
+    #[ORM\Column(nullable: true)]
+    private ?float $trainerPayment = null;
 
     #[ORM\Column]
     #[ORM\JoinColumn(nullable: true)]

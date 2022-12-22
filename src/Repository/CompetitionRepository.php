@@ -110,4 +110,27 @@ class CompetitionRepository extends ServiceEntityRepository
                 ->setMaxResults(1);
         return $queryBuilder->getQuery()->getResult();
     }
+
+
+    public function findFilteredCompetitions($cityFilter, $priceFilter): QueryBuilder
+    {
+        $queryBuilder = $this->addOrderByIdQueryBuilder();
+        //$queryBuilder = $this->createQueryBuilder('training_session')->select('training_session');
+        if ($cityFilter!==''){$queryBuilder->andWhere('competition.city LIKE :city')->setParameter('city', '%'.$cityFilter.'%');}
+        //if ($categoryFilter!==''){$queryBuilder->andWhere('training_session.category = :category')->setParameter('category', $categoryFilter);}
+        if ($priceFilter==='under-50'){$queryBuilder->andWhere('competition.price < 50');}
+        if ($priceFilter==='50-100'){$queryBuilder->andWhere('competition.price BETWEEN 50 AND 100');}
+        if ($priceFilter==='over-100'){$queryBuilder->andWhere('competition.price > 100');}
+        $queryBuilder->andWhere('competition.isCanceled = false');
+        return $queryBuilder;
+    }
+
+    public function findAllCitiesForFilterApprovedNotCanceledNotExpired(): array
+    {
+        $queryBuilder = $this->createQueryBuilder('competition')->select('DISTINCT competition.city');
+        $queryBuilder->andWhere('competition.city IS NOT NULL');
+        $queryBuilder->andWhere('competition.isCanceled = false');/*
+        $queryBuilder->andWhere('training_session.endDate > CURRENT_DATE()');*/
+        return $queryBuilder->getQuery()->getResult();
+    }
 }

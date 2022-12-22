@@ -756,6 +756,11 @@ $(function () {
       label.find('.center').text(" " + value + " ")
     })
   })
+
+  var pagination = document.getElementsByClassName('page-link');
+  pagination[0].innerHTML = '<i class="fas fa-angle-left"></i>';
+  pagination[pagination.length-1].innerHTML = '<i class="fas fa-angle-right"></i>';
+
   
 
 })(jQuery);

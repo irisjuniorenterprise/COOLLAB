@@ -1,0 +1,230 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <body>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Preloader
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <div class="preloader">
+        <div class="drawing" id="loading">
+            <div class="loading-dot"></div>
+        </div>
+    </div>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Preloader
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+    {{ include('partials/_cursor.index.html.twig') }}
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Header
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    {{ include('partials/_header.index.pages.html.twig') }}
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Header
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        Start Banner
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <section class="banner-section two inner">
+        <div class="banner-element-four two">
+            <img src="{{ asset('build/images/element/element-5.png') }}" alt="element">
+        </div>
+        <div class="banner-element-five two">
+            <img src="{{ asset('build/images/element/element-7.png') }}" alt="element">
+        </div>
+        <div class="banner-element-nineteen two">
+            <img src="{{ asset('build/images/element/element-6.png') }}" alt="element">
+        </div>
+        <div class="banner-element-twenty-two two">
+            <img src="{{ asset('build/images/element/element-69.png') }}" alt="element">
+        </div>
+        <div class="banner-element-twenty-three two">
+            <img src="{{ asset('build/images/element/element-70.png') }}" alt="element">
+        </div>
+        <div class="container">
+            <div class="row justify-content-center align-items-center mb-30-none">
+                <div class="col-xl-12 mb-30">
+                    <div class="banner-content two">
+                        <div class="banner-content-header">
+                            <h2 class="title">Blog Classic</h2>
+                            <div class="breadcrumb-area">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Blog Classic</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Banner
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Scroll-To-Top
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <a href="#" class="scrollToTop"><i class="las la-angle-double-up"></i></a>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Scroll-To-Top
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Blog
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <section class="blog-section ptb-120">
+        <div class="container">
+            <div class="row justify-content-center mb-60-none">
+                <div class="col-xl-4 col-lg-4 mb-60">
+                    <div class="sidebar">
+                        <form class="contact-form" method="post"
+                              action="{{ path('app_competition_competition_filtered') }}">
+                            <div class="widget-box mb-30">
+                                <div class="category-widget-box">
+                                    <h4 class="widget-title mt-5">Régions:</h4>
+                                    <div class="form-group">
+                                        <div class="contact-select">
+                                            <select name="cityFilter" style="z-index: 99999" class="form--control">
+                                                {% if cityFilter is null or cityFilter == "" %}
+                                                <option value="">Sélectionner une région</option>
+                                                {% endif %}
+                                                {% for city in cities %}
+                                                    <option {% if cityFilter is not null and cityFilter == city['city'] %} selected {% endif %} value="{{ city['city'] }}">{{ city['city'] }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <br><br>
+                                    {#
+                                    <div class="from-group">
+                                        <div class="switch-button">
+                                            <input name="expiredCheck" class="switch-button-checkbox" {% if expiredCheck == false %} checked {% endif %}
+                                                   type="checkbox"></input>
+                                            <label class="switch-button-label" for=""><span
+                                                        class="switch-button-label-span text-white">Expiré</span></label>
+                                        </div>
+                                    </div>#}
+                                    <div class="form-group">
+                                        <h4 class="widget-title mt-5">Filtre par prix:</h4>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="price-filter" id="all" value="all" {% if priceFilter == '0' %} checked {% endif %}>
+                                            <label class="form-check-label" for="under-50">Tous</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="price-filter" id="under-50" value="under-50" {% if priceFilter == 'under-50' %} checked {% endif %}>
+                                            <label class="form-check-label" for="under-50">Moins 50 Dt</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="price-filter" id="50-100" value="50-100" {% if priceFilter == '50-100' %} checked {% endif %}>
+                                            <label class="form-check-label" for="50-100">50 Dt - 100 Dt</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="price-filter" id="over-100" value="over-100" {% if priceFilter == 'over-100' %} checked {% endif %}>
+                                            <label class="form-check-label" for="over-100">Plus 100 Dt</label>
+                                        </div>
+                                    </div>
+
+                                   {# <div class="from-group">
+                                        <div class="form-range-filter">
+                                            <h3 class="heading">Prix Maximum</h3>
+                                            <div class="form-group">
+                                                <div class="slider-label -thumb">
+                                                    <span class="center -price">0</span>
+                                                </div>
+                                                <div class="form-slider -price" data-js-form-slider="true">
+                                                    <input name="priceFilter" class="field" max="500" min="100"
+                                                           type="range" value="350"></input>
+                                                    <span class="fill"></span>
+                                                </div>
+                                                <div class="slider-label">
+                                                    <span class="left -price"> 100</span>
+                                                    <span class="right -price"> 500</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>#}
+
+                                </div>
+                            </div>
+                            <label class="mt-5">
+                                <input class="btn--base mt-10" type="submit">
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-xl-8 col-lg-8 mb-60">
+                    <div class="row justify-content-center mb-60-none">
+                        {% for competition in pager %}
+                        <div class="col-xl-12 mb-60">
+                            <div class="blog-item">
+                                <div class="blog-thumb">
+                                    <img src="/uploads/competitions/thumbnail/{{ competition.thumbnail }}" style="height: 380px!important;width: 769px!important;object-fit: inherit !important;" width="769px" height="380px" alt="{{ competition.name }}">
+                                </div>
+                                <div class="blog-content">
+                                    <div class="blog-post-meta">
+{#
+                                        <span class="user">Assuré par : {% for trainer in competition.trainingTrainers %} {{ trainer.user.fullName }} {% endfor %}</span>
+#}
+                                        <span class="category two">{{ competition.startDate|date('j F Y') }}</span>
+                                        {% if competition.endDate > date() %}
+                                        <span class="category two badge badge--success text-white">Valable</span>
+                                        {% endif %}
+                                        {% if competition.endDate < date() %}
+                                        <span class="category two badge badge--danger text-white">Expiré</span>
+                                        {% endif %}
+                                    </div>
+                                    <h3 class="title"><a target="_blank" href="{{ path('app_training_session_details', { 'id': competition.id }) }}">{{ competition.name }}</a></h3>
+                                    <p>{{ competition.description }}</p>
+                                    <div class="blog-btn">
+                                        <a target="_blank" href="{{ path('app_competition_details', { 'id': competition.id }) }}" class="custom-btn">Détails <i
+                                                    class="fas fa-arrow-right ml-2"></i></a>
+                                        {% if competition.endDate > date() %}
+                                        <a href="{{ path('app_competition_participate', { 'id':competition.id }) }}" class="custom-btn ml-5">Participer <i
+                                                    class="fas fa-arrow-right ml-2"></i></a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% else %}
+                            <div class="col-xl-12 mb-60">
+                                <div class="blog-item">
+                                    <div class="blog-thumb text-center">
+                                        <h3 class="title">Aucune compétition trouvée</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                    <nav>
+                        {{ pagerfanta(pager) }}
+                    </nav>
+            </div>
+        </div>
+    </section>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Blog
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Footer
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    {{ include('partials/_footer.index.html.twig') }}
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Footer
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+    </body>
+{% endblock %}

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ParticipateToTrainingSessionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -17,8 +19,6 @@ class ParticipateToTrainingSession
     #[ORM\Column(nullable: true)]
     private ?bool $isPresent = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $comment = null;
 
     #[ORM\Column(nullable: true)]
     private ?float $rate = null;
@@ -26,11 +26,8 @@ class ParticipateToTrainingSession
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $participatedAt = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $commentedAt = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?bool $isCached = false;
+
 
     #[ORM\ManyToOne(inversedBy: 'participateToTrainingSessions')]
     #[ORM\JoinColumn(nullable: false)]
@@ -39,6 +36,14 @@ class ParticipateToTrainingSession
     #[ORM\ManyToOne(inversedBy: 'participateToTrainingSessions')]
     #[ORM\JoinColumn(nullable: false)]
     private ?TrainingSession $trainingSession = null;
+
+    #[ORM\OneToMany(mappedBy: 'participateToTrainingSession', targetEntity: Comment::class)]
+    private Collection $comment;
+
+    public function __construct()
+    {
+        $this->comment = new ArrayCollection();
+    }
 
     public function getId(): int
     {
@@ -57,19 +62,9 @@ class ParticipateToTrainingSession
         return $this;
     }
 
-    public function getComment(): string
-    {
-        return $this->comment;
-    }
 
-    public function setComment(string $comment): self
-    {
-        $this->comment = $comment;
 
-        return $this;
-    }
-
-    public function getRate(): float
+    public function getRate(): float|null
     {
         return $this->rate;
     }
@@ -93,29 +88,7 @@ class ParticipateToTrainingSession
         return $this;
     }
 
-    public function getCommentedAt(): \DateTimeImmutable
-    {
-        return $this->commentedAt;
-    }
 
-    public function setCommentedAt(\DateTimeImmutable $commentedAt): self
-    {
-        $this->commentedAt = $commentedAt;
-
-        return $this;
-    }
-
-    public function getIsCached(): bool
-    {
-        return $this->isCached;
-    }
-
-    public function setIsCached(bool $isCached): self
-    {
-        $this->isCached = $isCached;
-
-        return $this;
-    }
 
     public function getUser(): User
     {
@@ -137,6 +110,51 @@ class ParticipateToTrainingSession
     public function setTrainingSession(TrainingSession $trainingSession): self
     {
         $this->trainingSession = $trainingSession;
+
+        return $this;
+    }
+
+    public function participate(?TrainingSession $trainingSession, ?User $commentedUser): bool
+    {
+        $participated = false;
+        if ($trainingSession) {
+            $this->setTrainingSession($trainingSession);
+            $participated = true;
+        }
+        if ($commentedUser) {
+            $this->setUser($commentedUser);
+            $participated = true;
+        }
+        $this->setParticipatedAt(new \DateTimeImmutable());
+        return $participated;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComment(): Collection
+    {
+        return $this->comment;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comment->contains($comment)) {
+            $this->comment->add($comment);
+            $comment->setParticipateToTrainingSession($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comment->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getParticipateToTrainingSession() === $this) {
+                $comment->setParticipateToTrainingSession(null);
+            }
+        }
 
         return $this;
     }

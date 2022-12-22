@@ -46,8 +46,8 @@ class TrainingSession
     #[ORM\Column]
     private bool $isCanceled = false;
 
-    #[ORM\Column]
-    private float $price;
+    #[ORM\Column(nullable: true)]
+    private ?float $price = null;
 
 
     #[ORM\Column(nullable: true)]
@@ -59,7 +59,7 @@ class TrainingSession
     #[ORM\OneToMany(mappedBy: 'trainingSession', targetEntity: TrainingTrainer::class, fetch: 'EAGER', orphanRemoval: true)]
     private Collection $trainingTrainers;
 
-    #[ORM\OneToMany(mappedBy: 'trainingSession', targetEntity: ParticipateToTrainingSession::class)]
+    #[ORM\OneToMany(mappedBy: 'trainingSession', targetEntity: ParticipateToTrainingSession::class, fetch: 'EAGER')]
     private Collection $participateToTrainingSessions;
 
     #[ORM\ManyToOne(inversedBy: 'trainingSessions')]

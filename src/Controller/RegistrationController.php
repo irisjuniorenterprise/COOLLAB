@@ -216,4 +216,37 @@ class RegistrationController extends AbstractController
         $this->addFlash('success', 'account verified');
         return $this->redirectToRoute('login_users');
     }
+
+    #[Route('/trainer/{id}/update-password', name: 'app_user_update_password', methods: ['GET', 'POST'])]
+    public function updatePassword(User $user,Request $request ,UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response
+    {
+        // check if the old password is correct
+        $oldPassword = $request->request->get('oldPassword');
+        $newPassword = $request->request->get('newPassword');
+        if ($oldPassword === $newPassword) {
+            $this->addFlash('error', 'Mot de passe identique');
+            return $this->redirectToRoute('app_profile_trainer', ['id' => $user->getId()]);
+        }
+        if (!$userPasswordHasher->isPasswordValid($user, $oldPassword)) {
+            $this->addFlash('error', 'Mot de passe incorrect');
+            return $this->redirectToRoute('app_profile_trainer', ['id' => $user->getId()]);
+        }
+        if ($oldPassword === null || $newPassword === null) {
+            $this->addFlash('error', 'Mot de passe est vide');
+            return $this->redirectToRoute('app_profile_trainer', ['id' => $user->getId()]);
+        }
+        // check the size of the new password
+        if (strlen($newPassword) < 8) {
+            $this->addFlash('error', 'Mot de passe doit contenir au moins 8 caractères');
+            return $this->redirectToRoute('app_profile_trainer', ['id' => $user->getId()]);
+        }
+        if ($userPasswordHasher->isPasswordValid($user, $oldPassword)) {
+            $newPassword = $request->request->get('newPassword');
+            $user->setPassword($userPasswordHasher->hashPassword($user, $newPassword));
+            $userRepository->save($user, true);
+            $this->addFlash('success', 'Mot de passe modifié avec succès');
+            return $this->redirectToRoute('app_profile_trainer', ['id' => $user->getId()]);
+        }
+        return $this->redirectToRoute('app_profile_trainer', ['id' => $user->getId()]);
+    }
 }

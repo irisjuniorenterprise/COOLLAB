@@ -1,0 +1,313 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <body>
+    <div class="preloader">
+        <div class="drawing" id="loading">
+            <div class="loading-dot"></div>
+        </div>
+    </div>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Preloader
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+    {{ include('partials/_cursor.index.html.twig') }}
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Header
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    {{ include('partials/_header.index.pages.html.twig') }}
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Header
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Banner
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <section class="banner-section two inner">
+        <div class="banner-element-four two">
+            <img src="assets/images/element/element-5.png" alt="element">
+        </div>
+        <div class="banner-element-five two">
+            <img src="assets/images/element/element-7.png" alt="element">
+        </div>
+        <div class="banner-element-nineteen two">
+            <img src="assets/images/element/element-6.png" alt="element">
+        </div>
+        <div class="banner-element-twenty-two two">
+            <img src="assets/images/element/element-69.png" alt="element">
+        </div>
+        <div class="banner-element-twenty-three two">
+            <img src="assets/images/element/element-70.png" alt="element">
+        </div>
+        <div class="container">
+            <div class="row justify-content-center align-items-center mb-30-none">
+                <div class="col-xl-12 mb-30">
+                    <div class="banner-content two">
+                        <div class="banner-content-header">
+                            <h2 class="title">Team Single</h2>
+                            <div class="breadcrumb-area">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Team Single</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Banner
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Scroll-To-Top
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <a href="#" class="scrollToTop"><i class="las la-angle-double-up"></i></a>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Scroll-To-Top
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Team
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <section class="team-section three ptb-120">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-12">
+                    <div class="team-item details">
+                        <div class="team-thumb">
+                            <img src="assets/images/team/team-big.png" alt="team">
+                        </div>
+                        <div class="team-content-area">
+                            <div class="team-content">
+                                {% for flash in app.flashes('created') %}
+                                    <div class="alert alert-success">{{ flash }}</div>
+                                {% endfor %}
+                                {% for flash in app.flashes('errorDate') %}
+                                    <div class="alert alert-danger">{{ flash }}</div>
+                                {% endfor %}
+                                <h3 class="title text-capitalize">{{ user.fullName }}</h3>
+                                <span class="sub-title">Formateur</span>
+                                <div class="team-social-area">
+                                    <ul class="team-social">
+                                        <li><a href="#0"><i class="fab fa-facebook-f"></i></a></li>
+                                        <li><a href="#0"><i class="fab fa-twitter"></i></a></li>
+                                        <li><a href="#0"><i class="fab fa-google-plus-g"></i></a></li>
+                                        <li><a href="#0"><i class="fab fa-instagram"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="team-signature">
+                                    <img src="assets/images/element/element-75.png" alt="element">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-tab-area">
+                <div class="team-tab">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <button class="nav-link active" id="education-tab" data-toggle="tab"
+                                    data-target="#education" type="button" role="tab" aria-controls="education"
+                                    aria-selected="true">Données Personnels
+                            </button>
+                            <button class="nav-link" id="experience-tab" data-toggle="tab" data-target="#experience"
+                                    type="button" role="tab" aria-controls="experience" aria-selected="false">Expérience
+                            </button>
+                            <button class="nav-link" id="skills-tab" data-toggle="tab" data-target="#skills"
+                                    type="button" role="tab" aria-controls="skills" aria-selected="false">Modification
+                            </button>
+                            <button class="nav-link" id="demande-tab" data-toggle="tab" data-target="#demande"
+                                    type="button" role="tab" aria-controls="demande" aria-selected="false">Demander
+                            </button>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="education" role="tabpanel"
+                             aria-labelledby="education-tab">
+                            {% for flash in app.flashes('updated') %}
+                                <div class="alert alert-success">{{ flash }}</div>
+                            {% endfor %}
+                            <div class="team-overview">
+                                <div class="team-overview-content">
+                                    <h4 class="title">Nom et prénom</h4>
+                                    <p class="text-capitalize">{{ user.fullName }}</p>
+                                </div>
+                                <div class="team-overview-content">
+                                    <h4 class="title">Email</h4>
+                                    <p>{{ user.email }}</p>
+                                </div>
+                                <div class="team-overview-content">
+                                    <h4 class="title">Téléphone</h4>
+                                    <p>{{ user.phone }}</p>
+                                </div>
+                                <div class="team-overview-content">
+                                    <h4 class="title">Adresse</h4>
+                                    <p>{{ user.address }}</p>
+                                </div>
+                                <div class="team-overview-content">
+                                    <h4 class="title">Carte d'identité nationale</h4>
+                                    <p>{{ user.cin }}</p>
+                                </div>
+                                <div class="team-overview-content">
+                                    <h4 class="title">Mot de passe</h4>
+                                    {% for flash in app.flashes('success') %}
+                                        <div class="alert alert-success">{{ flash }}</div>
+                                    {% endfor %}
+                                    {% for flash in app.flashes('error') %}
+                                        <div class="alert alert-danger">{{ flash }}</div>
+                                    {% endfor %}
+                                    <form method="post"
+                                          action="{{ path('app_user_update_password', { 'id':user.id }) }}"
+                                          class="form-group col-sm-4">
+                                        <label for="password">Ancien mot de passe</label>
+                                        <input type="password" name="oldPassword" id="password" required>
+                                        <label for="password">Nouveau mot de passe</label>
+                                        <input type="password" name="newPassword" id="password" required>
+                                        <button type="submit" class="btn--base mt-10">Modifier</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="experience" role="tabpanel" aria-labelledby="experience-tab">
+                            <div class="team-overview">
+                                <div class="team-overview-content">
+                                    <h4 class="title">Expérience proffessionnel</h4>
+                                    {% for work in user.workPlace %}
+                                        <p>{{ work }}</p>
+                                    {% endfor %}
+                                </div>
+                                <div class="team-overview-content">
+                                    <h4 class="title">Expérience associative</h4>
+                                    {% for club in user.club %}
+                                        <p>{{ club }}</p>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="skills" role="tabpanel" aria-labelledby="skills-tab">
+                            <div class="team-overview">
+                                <div class="team-overview-content">
+                                    <h4 class="title">Modifier vos données personnels</h4>
+                                    <form method="post"
+                                          action="{{ path('app_profile_update', { 'id':user.id }) }}"
+                                          class="form-group col-sm-4">
+                                        <label for="fname">Nom</label>
+                                        <input type="text" name="firstName" id="fname" required
+                                               value="{{ user.firstName }}">
+                                        <label for="lname">Prénom</label>
+                                        <input type="text" name="lastName" id="lname" required
+                                               value="{{ user.lastName }}">
+                                        <label for="number">Téléphone</label>
+                                        <input type="text" name="phone" id="number" required value="{{ user.phone }}">
+                                        <label for="address">Adresse</label>
+                                        <input type="text" name="address" id="address" required
+                                               value="{{ user.address }}">
+                                        <label for="club">Club</label>
+                                        <input type="text" name="club" id="club" required
+                                               value="{% for club in user.club %}{{club}},{% endfor %}">
+                                        <label for="work">Expérience proffessionnel</label>
+                                        <input type="text" name="work" id="work" required
+                                               value="{% for work in user.workPlace %} {{ work }}, {% endfor %}">
+                                        <button type="submit" class="btn--base mt-10">Modifier</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="demande" role="tabpanel" aria-labelledby="demande-tab">
+                            <div class="team-overview">
+                                <div class="team-overview-content">
+                                    <h4 class="title">Demander une formation</h4>
+                                    <form method="post"
+                                          action="{{ path('app_profile_training_request', { 'id':user.id }) }}"
+                                          class="form-group col-sm-4">
+                                        <div class="form-group contact-form">
+                                            <div class="contact-select">
+                                                <select name="category" style="z-index: 99999" class="form--control">
+                                                    <option value="0">Choisir la catégorie</option>
+                                                    {% for category in categories %}
+                                                        <option value="{{ category.id }}">{{ category.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <label for="name">Nom</label>
+                                        <input type="text" name="trainingName" id="name" required placeholder="Entrer le nom du formation">
+                                        <label for="description">Description</label>
+                                        <input type="text" name="description" id="description" required placeholder="Entrer la description du formation" ">
+                                        <label for="address">Adresse</label>
+                                        <input type="text" name="address" id="address" required placeholder="Entrer l'adresse du lieu">
+                                        <div class="form-group contact-form">
+                                            <div class="contact-select">
+                                                <label for="club">Région</label>
+                                                <select class="form--control" name="city" id="city">
+                                                    <option selected>Choisir la région</option>
+                                                    <option value="Ariana">Ariana</option>
+                                                    <option value="Beja">Beja</option>
+                                                    <option value="Ben Arous">Ben Arous</option>
+                                                    <option value="Bizerte">Bizerte</option>
+                                                    <option value="Gabes">Gabes</option>
+                                                    <option value="Gafsa">Gafsa</option>
+                                                    <option value="Jendouba">Jendouba</option>
+                                                    <option value="Kairouan">Kairouan</option>
+                                                    <option value="Kasserine">Kasserine</option>
+                                                    <option value="Kebili">Kebili</option>
+                                                    <option value="Kef">Kef</option>
+                                                    <option value="Mahdia">Mahdia</option>
+                                                    <option value="Manouba">Manouba</option>
+                                                    <option value="Medenine">Medenine</option>
+                                                    <option value="Monastir">Monastir</option>
+                                                    <option value="Nabeul">Nabeul</option>
+                                                    <option value="Sfax">Sfax</option>
+                                                    <option value="Sidi Bouzid">Sidi Bouzid</option>
+                                                    <option value="Siliana">Siliana</option>
+                                                    <option value="Sousse">Sousse</option>
+                                                    <option value="Tataouine">Tataouine</option>
+                                                    <option value="Tozeur">Tozeur</option>
+                                                    <option value="Tunis">Tunis</option>
+                                                    <option value="Zaghouan">Zaghouan</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <label for="startDate">Date début</label>
+                                        <input type="datetime-local" name="startDate" id="startDate" required>
+                                        <label for="endDate">Date début</label>
+                                        <input type="datetime-local" name="endDate" id="endDate" required>
+                                        <div class="form-group">
+                                            <label>Prérequis</label>
+                                            <textarea class="form--control" name="requirement" placeholder="Vos prérequis"></textarea>
+                                        </div>
+                                        <button type="submit" class="btn--base mt-10">Demander</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Footer
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    {{ include('partials/_footer.index.html.twig') }}
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Footer
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+    <!-- jquery -->
+    <script src="assets/js/jquery-3.6.0.min.js"></script>
+    <!-- bootstrap js -->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!-- swipper js -->
+    </body>
+{% endblock %}

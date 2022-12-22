@@ -85,7 +85,12 @@
                                                 <li><a href="#">Blog Details</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="#">Formations</a></li>
+                                        <li><a target="_blank" href="{{ path('app_training_session_training_filtered') }}">Formations</a></li>
+                                        <li><a target="_blank" href="{{ path('app_competition_competition_filtered') }}">Compétitions</a></li>
+
+                                        {% if 'ROLE_TRAINER' in user.roles %}
+                                            <li><a target="_blank" href="{{ path('app_profile_trainer') }}">Profile</a></li>
+                                        {% endif %}
                                         <li class="menu_has_children">
                                             <a href="#">Connexion <i class="las la-angle-down"></i></a>
                                             <ul class="sub-menu">
