@@ -7,6 +7,7 @@ use App\Form\RegistrationFormType;
 use App\Form\RegistrationTrainerFormType;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
+use App\Service\FileUploaderService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,10 +40,17 @@ class RegistrationController extends AbstractController
         $formTrainer->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $city = $request->request->get('city');
+            $gender = $request->request->get('gender');
+            $birthday = $request->request->get('dateUser');
+            $birthday = \DateTimeImmutable::createFromFormat('Y-m-d', $birthday);
+            $user->setBirthday($birthday);
             // encode the plain password
             $user->setRoles(['ROLE_USER']);
+            $user->setCity($city);
             $user->setIsBanned(false);
-            $user->setIsVerified(true);
+            $user->setIsApproved(true);
+            $user->setGender($gender);
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
@@ -86,13 +94,20 @@ class RegistrationController extends AbstractController
             // split clubs by comma and trim spaces from each club
             $clubs = explode(',', $request->request->get('club'));
             $clubs = array_map('trim', $clubs);
+            $prof = $request->request->get('prof');
+            $gender = $request->request->get('gender');
             $workPlaces = explode(',', $request->request->get('work'));
             $workPlaces = array_map('trim', $workPlaces);
+            $birthday = $request->request->get('dateUser');
+            $birthday = \DateTimeImmutable::createFromFormat('Y-m-d', $birthday);
+            $user->setBirthday($birthday);
             // set clubs to user from clubs array
             $user->setClub($clubs);
             $user->setWorkPlace($workPlaces);
             // encode the plain password
             $user->setRoles(['ROLE_TRAINER']);
+            $user->setGender($gender);
+            $user->setProfession($prof);
             $user->setIsBanned(false);
             $user->setIsApproved(false);
             $user->setPassword(
@@ -149,12 +164,16 @@ class RegistrationController extends AbstractController
             $clubs = array_map('trim', $clubs);
             $workPlaces = explode(',', $request->request->get('work'));
             $workPlaces = array_map('trim', $workPlaces);
+            $city = $request->request->get('city');
             // set clubs to user from clubs array
             $user->setClub($clubs);
             $user->setWorkPlace($workPlaces);
+            $user->setCity($city);
+            $user->setIsApproved(false);
             // encode the plain password
             $user->setRoles(['ROLE_TRAINER']);
             $user->setIsBanned(false);
+            FileUploaderService::uploadTrainerImage($_FILES['trainerImage'], 'uploads/trainer/', $user);
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,

@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Competition;
 use App\Entity\Image;
 use App\Entity\TrainingSession;
+use App\Entity\User;
 use App\Repository\CompetitionRepository;
 use App\Repository\ImageRepository;
 use App\Repository\TrainingSessionRepository;
@@ -74,6 +75,25 @@ class FileUploaderService
         $imageName = str_replace(' ', '_', 'thumbnail') . '_' . uniqid('', true) . "." . $imageType;
         move_uploaded_file($file['tmp_name'], $targetDirectory . $imageName);
         $entity->setThumbnail($imageName);
+        return $imageName;
+    }
+
+    public static function uploadBanner($file, $targetDirectory): string
+    {
+        $picture = $file['name'];
+        $imageType = pathinfo($picture, PATHINFO_EXTENSION);
+        $imageName = str_replace(' ', '_', 'banner') . '_' . uniqid('', true) . "." . $imageType;
+        move_uploaded_file($file['tmp_name'], $targetDirectory . $imageName);
+        return $imageName;
+    }
+
+    public static function uploadTrainerImage($file, $targetDirectory, User $entity): string
+    {
+        $picture = $file['name'];
+        $imageType = pathinfo($picture, PATHINFO_EXTENSION);
+        $imageName = str_replace(' ', '_', 'thumbnail') . '_' . uniqid('', true) . "." . $imageType;
+        move_uploaded_file($file['tmp_name'], $targetDirectory . $imageName);
+        $entity->setImage($imageName);
         return $imageName;
     }
 }

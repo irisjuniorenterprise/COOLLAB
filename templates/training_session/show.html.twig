@@ -67,7 +67,9 @@
                         {% for image in training_session.images %}
                             <img src="{{ asset('uploads/trainingSession/' ~ image.imageName) }}"
                                  alt="{{ image.imageName }}" width="150px" height="auto">
-                            <a class="remove-image" href="{{ path('app_training_session_delete_image', {'id': training_session.id, 'imageId': image.id}) }}" style="display: inline;">&#215;</a>
+                            <a class="remove-image"
+                               href="{{ path('app_training_session_delete_image', {'id': training_session.id, 'imageId': image.id}) }}"
+                               style="display: inline;">&#215;</a>
                         {% endfor %}
                     </td>
                 </tr>
@@ -81,5 +83,72 @@
                 </tbody>
             </table>
         </div>
+        <div class="container-fluid pt-4 px-4">
+            <div class="row g-4">
+                <div class="col-12">
+                    <div class="bg-light rounded h-100 p-4">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Comments</th>
+                                    <th scope="col">actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for participate in training_session.participateToTrainingSessions %}
+                                    <tr>
+                                        <td class="h5">{{ participate.user.fullName }} {% if participate.isPresent %}(présent){% endif %}</td>
+                                        <td>
+                                            <div class="row">
+                                                {% for comment in participate.comment %}
+
+                                                    <div class="col-5">
+                                                        <p>{{ comment.content }}</p>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <p>{{ comment.commentedAt|date('j F Y') }}</p>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        {% if comment.isCached %}
+                                                            <span class="alert-danger p-1" style="border-radius: 7px">caché</span>
+                                                        {% else %}
+                                                            <span class="alert-success p-1  "
+                                                                  style="border-radius: 7px">visible</span>
+                                                        {% endif %}
+
+                                                    </div>
+                                                    <div class="col-2">
+                                                        {% if comment.isCached == false %}
+                                                        <a href="{{ path('app_cached', {'id': training_session.id,'id_comment':comment.id}) }}">cache
+                                                        </a>
+                                                        {% else %}
+                                                            <a href="{{ path('app_visible_comment', {'id': training_session.id,'id_comment':comment.id}) }}">visible
+                                                            </a>
+                                                            {% endif %}
+                                                    </div>
+                                                    <hr>
+                                                {% endfor %}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a href="{{ path('app_user_ban', {'id': participate.user.id}) }}">Ban
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="3">no records found</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 {% endblock %}

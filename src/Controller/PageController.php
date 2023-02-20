@@ -18,10 +18,14 @@ use App\Repository\TrainingTrainerRepository;
 use App\Repository\UserRepository;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PageController extends AbstractController
@@ -125,11 +129,17 @@ class PageController extends AbstractController
     public function details(CommentRepository $commentRepository, TrainingSessionRepository $trainingSessionRepository, ParticipateToTrainingSessionRepository $participateToTrainingSessionRepository, int $id): Response
     {
         $trainingSession = $trainingSessionRepository->find($id);
+        $relatedTrainings = $trainingSessionRepository->findBy(['category' => $trainingSession?->getCategory(), 'isApproved' => true, 'isCanceled' => false]);
+        // exclude current training session from the list
+        $relatedTrainings = array_filter($relatedTrainings, function ($relatedTraining) use ($trainingSession) {
+            return $relatedTraining->getId() !== $trainingSession->getId();
+        });
+        $trainingSessions = $trainingSessionRepository->findBy(['category' => $trainingSession?->getCategory(), 'isApproved' => true, 'isCanceled' => false]);
         return $this->render('training_session/trainings.details.html.twig', [
             'training_session' => $trainingSession,
             'trainings' => $trainingSessionRepository->findBy(['isApproved' => true, 'isCanceled' => false]),
             'images' => $trainingSession?->getImages(),
-            'related_trainings' => $trainingSessionRepository->findBy(['category' => $trainingSession?->getCategory(), 'isApproved' => true, 'isCanceled' => false]),
+            'related_trainings' => $relatedTrainings,
             'user' => $this->getUser(),
             'comments' => $commentRepository->findBy(['isCached' => false, 'participateToTrainingSession' => $participateToTrainingSessionRepository->findBy(['trainingSession' => $trainingSession])]),
             'rated' => $participateToTrainingSessionRepository->findOneBy(['trainingSession' => $trainingSession, 'user' => $this->getUser()?->getId()])?->getRate() ?? 0.0,
@@ -144,6 +154,10 @@ class PageController extends AbstractController
         // check if user is logged in and if he is not already participated in the training session and if he is not logged in redirect to login page
         if (!$this->getUser()) {
             return $this->redirectToRoute('login_users');
+        }
+        if ($participateToTrainingSessionRepository->findOneBy(['trainingSession' => $trainingSessionRepository->find($id), 'user' => $this->getUser()])) {
+            $this->addFlash('danger', 'Vous êtes déjà inscrit à cette formation');
+            return $this->redirectToRoute('app_training_session_details', ['id' => $id]);
         }
         $trainingSession = $trainingSessionRepository->find($id);
         $commentedUser = $userRepository->find($this->getUser()?->getId());
@@ -202,11 +216,16 @@ class PageController extends AbstractController
     public function detailsCompetition(CompetitionRepository $competitionRepository, int $id): Response
     {
         $competition = $competitionRepository->find($id);
+        $relatedCompetitions = $competitionRepository->findBy(['isCanceled' => false]);
+        // exclude current competition from the list
+        $relatedCompetitions = array_filter($relatedCompetitions, function ($relatedCompetition) use ($competition) {
+            return $relatedCompetition->getId() !== $competition->getId();
+        });
         return $this->render('competition/competitions.details.html.twig', [
             'competition' => $competition,
             'competitions' => $competitionRepository->findBy(['isCanceled' => false]),
             'images' => $competition?->getImageCompetitions(),
-            'related_competitions' => $competitionRepository->findBy(['isCanceled' => false]),
+            'related_competitions' => $relatedCompetitions,
             'user' => $this->getUser(),
         ]);
     }
@@ -302,15 +321,21 @@ class PageController extends AbstractController
 
     // profile page (only for logged in users) (only for trainers)
     #[Route('/profile', name: 'app_profile_trainer', methods: ['GET', 'POST'])]
-    public function profile(TrainingSessionRepository $trainingSessionRepository, UserRepository $userRepository, CategoryRepository $categoryRepository): Response
+    public function profile(TrainingSessionRepository $trainingSessionRepository, UserRepository $userRepository, CategoryRepository $categoryRepository, TrainingTrainerRepository $trainingTrainerRepository, ParticipateToTrainingSessionRepository $participateToTrainingSessionRepository): Response
     {
         // check if user is logged in and if he is not already participated in the training session and if he is not logged in redirect to login page
+        $user = $userRepository->find($this->getUser()?->getId());
         if (!$this->getUser()) {
             return $this->redirectToRoute('login_users');
         }
+        $trainingRequested = $trainingTrainerRepository->findBy(['user' => $user, 'requestedBy' => true]);
+        // participated training sessions
+        $participatedTrainingSessions = $participateToTrainingSessionRepository->findBy(['user' => $user]);
         return $this->render('user/profile.trainer.html.twig', [
             'user' => $userRepository->find($this->getUser()?->getId()),
             'categories' => $categoryRepository->findAll(),
+            'trainingRequested' => $trainingRequested,
+            'participatedTrainingSessions' => $participatedTrainingSessions,
         ]);
     }
 
@@ -331,8 +356,10 @@ class PageController extends AbstractController
         $address = $request->request->get('address');
         $clubs = explode(',', $request->request->get('club'));
         $clubs = array_map('trim', $clubs);
+        $clubs = array_filter($clubs);
         $workPlaces = explode(',', $request->request->get('work'));
         $workPlaces = array_map('trim', $workPlaces);
+        $workPlaces = array_filter($workPlaces);
         if ($firstName) {
             $user->setFirstName($firstName);
         }
@@ -406,6 +433,93 @@ class PageController extends AbstractController
         $trainingTrainerRepository->save($trainingTrainer, true);
         $this->addFlash('created', 'Votre demande de formation a été envoyée');
         return $this->redirectToRoute('app_profile_trainer');
+    }
+
+
+    // get all training sessions that requested by trainer logged in
+    #[Route('/profile/training/requested', name: 'app_profile_training_requested', methods: ['GET', 'POST'])]
+    public function requestedTrainingSession(UserRepository $userRepository, TrainingTrainerRepository $trainingTrainerRepository): Response
+    {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('login_users');
+        }
+        $user = $userRepository->find($this->getUser()?->getId());
+        if (!$user) {
+            throw $this->createNotFoundException('Utilisateur non trouvé');
+        }
+        $trainingTrainers = $trainingTrainerRepository->findBy(['user' => $user]);
+        $trainingSessions = [];
+        foreach ($trainingTrainers as $trainingTrainer) {
+            if ($trainingTrainer->isRequestedBy()) {
+                $trainingSessions[] = $trainingTrainer->getTrainingSession();
+            }
+        }
+        return $this->render('user/profile.trainer.html.twig', [
+            'user' => $user,
+            'trainingSessions' => $trainingSessions,
+        ]);
+    }
+
+    // get the participated to training session ( training session id ) for a presence list
+    #[Route('/profile/training/participated/{id}', name: 'app_profile_training_participated_presence', methods: ['GET', 'POST'])]
+    public function participatedTrainingSession(UserRepository $userRepository, TrainingTrainerRepository $trainingTrainerRepository,TrainingSessionRepository $trainingSessionRepository,$id): Response
+    {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('login_users');
+        }
+        $trainingSession = $trainingSessionRepository->find($id);
+        $trainingForPresence = $trainingTrainerRepository->findBy(['trainingSession' => $trainingSession, 'user' => $this->getUser()]);
+        return $this->render('training_session/presence.html.twig', [
+            'user' => $this->getUser(),
+            'trainingForPresence' => $trainingForPresence,
+        ]);
+    }
+
+    // set the presence of a user to a training session
+    #[Route('/training/{id}/participated/{userId}/presence', name: 'app_profile_training_participated_presence_set', methods: ['GET', 'POST'])]
+    public function setPresenceTrainingSession(TrainingSession $trainingSession, UserRepository $userRepository, TrainingTrainerRepository $trainingTrainerRepository, ParticipateToTrainingSessionRepository $participateToTrainingSessionRepository, $userId): Response
+    {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('login_users');
+        }
+        $user = $userRepository->find($userId);
+        $training = $participateToTrainingSessionRepository->findOneBy(['trainingSession' => $trainingSession, 'user' => $user]);
+        $training?->setIsPresent(true);
+        $participateToTrainingSessionRepository->save($training, true);
+
+        return $this->redirectToRoute('app_profile_training_participated_presence', ['id' => $trainingSession->getId()]);
+    }
+
+    // contact page
+    #[Route('/contact', name: 'app_contact', methods: ['GET', 'POST'])]
+    public function contact(): Response
+    {
+        return $this->render('page/contact.html.twig',[
+            'user' => $this->getUser(),
+        ]);
+    }
+
+    // send mail to contact
+    #[Route('/contact/send', name: 'app_send_mail', methods: ['GET', 'POST'])]
+    public function sendContact(Request $request, MailerInterface $mailer): Response
+    {
+        $name = $request->request->get('name');
+        $email = $request->request->get('email');
+        $subject = $request->request->get('subject');
+        $message = $request->request->get('message');
+        $phone = $request->request->get('phone');
+        if (!$name || !$email || !$message) {
+            $this->addFlash('error', 'Veuillez remplir tous les champs');
+            return $this->redirectToRoute('app_contact');
+        }
+        $email = (new TemplatedEmail())
+            ->from($email)
+            ->to('ghayth.frikha14@gmail.com')
+            ->subject($subject)
+            ->htmlTemplate('email/welcome.html.twig');
+        $mailer->send($email);
+        $this->addFlash('success', 'Votre message a été envoyé');
+        return $this->redirectToRoute('app_contact');
     }
 
 }

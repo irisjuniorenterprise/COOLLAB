@@ -24,20 +24,22 @@
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
     <section class="banner-section">
         <div class="banner-video">
-            <video class="video-hero" autoplay muted loop>
+            {#<video class="video-hero" autoplay muted loop>
                 <source src="{{ asset('build/images/videos/hero_collab.mp4') }}" type="video/mp4">
-            </video>
-        <div class="banner-element-one">
-            <img src="{{ asset('build/images/element/element-3.png') }}" alt="element">
-        </div>
+            </video>#}
+            <iframe class="video-hero" width="100%" height="100%" src="https://www.youtube.com/embed/{{ video }}?autoplay=1&mute=1&controls=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <div class="banner-element-one">
+                <img src="{{ asset('build/images/element/element-3.png') }}" alt="element">
+            </div>
         </div>
         <div class="container custom-container">
             <div class="row align-items-end mb-30-none">
                 <div class="col-xl-7 col-lg-7 mb-30">
                     <div class="banner-content" data-aos="fade-right" data-aos-duration="1800">
-                        <h1 class="title">Smarter Way to Serve Digital Product Marketing</h1>
-                        <span class="sub-title">Build Your Innovations & Digital Future</span>
-                        <p>Personalization assumed up an excess of position in the showcasing space and has made each and every one of your messages exhausting and without feelings.</p>
+                        <h1 class="title">Collab We Share knowledge and more .. </h1>
+                        <span class="sub-title">Together we achieve success</span>
+                        {#<p>Personalization assumed up an excess of position in the showcasing space and has made each
+                            and every one of your messages exhausting and without feelings.</p>#}
                         <div class="banner-arrow">
                             <img src="{{ asset('build/images/element/element-1.png') }}" alt="element">
                         </div>
@@ -107,11 +109,11 @@
                     <div class="col-xl-6 col-lg-6 mb-30">
                         <div class="about-content">
                             <h2 class="title">A propos nous <br> <span class="text--base">COLLAB</span></h2>
-                            <p class="para">We rank among the best in the US, Argentina, and Ukraine. Our apps get featured as best in class, & our clients love our work.</p>
-                            <p>Welcome To Softim, a software development company, helps to digitize businesses by focusing on client’s business challenges, needs, pain points and providing business-goals-oriented software COLLAB.</p>
+                            <p class="para">Ensemble on atteint le succès!</p>
+                            <p>Collab a comme mission de donner  à ses intervenants et aux communautés qu’elle dessert le pouvoir d’atteindre l’excellence, de mettre à jour des nouvelles possibilités et de faire la différence en alliant technologie, pensée novatrice et collaboration.</p>
                             <div class="about-btn two">
                                 <a href="#" class="btn--base">Send Message</a>
-                                <span>or Call <a href="tel:11026593268003">+110 2659 3268 003</a></span>
+                                {#<span>or Call <a href="tel:11026593268003">+110 2659 3268 003</a></span>#}
                             </div>
                         </div>
                     </div>
@@ -124,6 +126,7 @@
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
 
+    {% if trainingSessions %}
     <section class="blog-section pb-130">
         <div class="blog-element">
             <img src="{{ asset('build/images/element/element-47.png') }}" alt="element">
@@ -133,84 +136,101 @@
                 <div class="col-xl-7 col-lg-8 text-center">
                     <div class="section-header">
                         <h2 class="section-title">Nos Formations</h2>
-                        <p>Credibly grow premier ideas rather than bricks-and-clicks strategic theme areas distributed for stand-alone web-readiness.</p>
+                        <p>Collab cherche à fournir la meilleure solution pour vos besoins. Notre modèle d'apprentissage est basé sur le partage d’expériences et savoir-faire fournissant à l'étudiant des connaissances et des compétences à long terme.</p>
                     </div>
                 </div>
             </div>
             <div class="row justify-content-center mb-40-none">
                 {% for training in trainingSessions[-6:]|reverse %}
-                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-30">
-                    <div class="blog-item">
-                        <div class="blog-thumb">
-                            <img src="uploads/trainingSession/thumbnail/{{ training.thumbnail }}" alt="{{ training.thumbnail }}">
-                        </div>
-                        <div class="blog-content">
-                            <div class="blog-post-meta">
+                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-30">
+                        <div class="blog-item">
+                            <div class="blog-thumb">
+                                <img src="uploads/trainingSession/thumbnail/{{ training.thumbnail }}"
+                                     alt="{{ training.thumbnail }}">
+                            </div>
+                            <div class="blog-content">
+                                <div class="blog-post-meta">
                                 <span class="user">Par : {% for trainer in training.trainingTrainers %}
                                         {{ trainer.user.fullName }}
                                     {% endfor %}</span>
-                                <br>
-                                <span class="date">{{ training.startDate|date('j F Y') }}</span>
+                                    <br>
+                                    <span class="date">{{ training.startDate|date('j F Y') }}</span>
+                                </div>
+                                <h3 class="title"><a target="_blank"
+                                                     href="{{ path('app_training_session_details',{'id':training.id}) }}">{{ training.name }}</a>
+                                </h3>
                             </div>
-                            <h3 class="title"><a href="#">{{ training.name }}</a></h3>
                         </div>
                     </div>
-                </div>
                 {% endfor %}
             </div>
         </div>
     </section>
+    {% endif %}
     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     Start Team
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-    <section class="team-section ptb-130">
-        <div class="team-element">
-            <img src="{{ asset('build/images/element/element-43.png') }}" alt="element">
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="section-header-wrapper">
-                        <div class="section-header">
-                            <h2 class="section-title">Nos Formateurs Acharnés</h2>
-                            <p>We rank among the best in the US, Argentina, and Ukraine. Our apps get featured as best in class, and our clients love our work.</p>
-                        </div>
-                        <div class="slider-nav-area">
-                            <div class="slider-prev">
-                                <i class="fas fa-chevron-left"></i>
-                            </div>
-                            <div class="slider-next">
-                                <i class="fas fa-chevron-right"></i>
+    {% if trainers %}
+        {% if trainers|length ==1 %}
+            <section class="team-section ptb-130">
+                <div class="team-element">
+                    <img src="{{ asset('build/images/element/element-43.png') }}" alt="element">
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="section-header-wrapper">
+                                <div class="section-header" style="width: 100%!important;">
+                                    <h2 class="section-title">Nos Formateurs Acharnés</h2>
+                                    <p> Parce que les experts <b>Collab</b> pratiquent ce qu’ils conseillent ou ce qu’ils enseignent, ils vous apportent les réponses les mieux adaptées à vos objectifs.
+                                        La pédagogie que nous développons vous permet d’anticiper les situations professionnelles que vous devrez gérer dans votre quotidien. Fondée sur des constats et des expériences terrain, notre approche équilibre harmonieusement théorie et pratique, mises en situation, études de cas…
+                                        Nos méthodes permettent à l’apprenant de <b> devenir co-acteur de sa formation et d’acquérir une plus grande autonomie</b>.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="row justify-content-center mb-10-none">
-                <div class="col-xl-12">
-                    <div class="team-slider-area">
-                        <div class="team-slider">
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <div class="team-item">
-                                        <div class="team-thumb">
-                                            <img src="{{ asset('build/images/team/team-1.png') }}" alt="team">
-                                            <div class="team-social-area">
+                    <div class="row justify-content-center mb-10-none">
+                        <div class="col-xl-12">
+                            <div class="team-slider-area">
+                                <div class="team-slider">
+                                    <div class="d-flex justify-content-around">
+                                        {% for trainer in trainers %}
+                                            <div class="">
+                                                <div class="team-item">
+                                                    <div class="{% if trainer.trainer.image == null %}team-thumb{% endif %}">
+                                                        <img src="
+
+                                                                {% if trainer.trainer.image == null %}
+                                                                    {% if trainer.trainer.gender == 'Homme' %}
+                                                                    {{ asset('build/images/team/team-1.png') }}
+                                                                    {% endif %}
+                                                                    {% if trainer.trainer.gender == 'Femme' %}
+                                                                    {{ asset('build/images/team/team-1.png') }}
+                                                                    {% endif %}
+                                                                    {% else %}
+                                                                        uploads/trainer/{{ trainer.trainer.image }}
+                                                                {% endif %}
+                                                                  "
+                                                             alt="team">
+                                                        {# <div class="team-social-area">
                                                 <ul class="team-social">
                                                     <li><a href="#0"><i class="fab fa-facebook-f"></i></a></li>
                                                     <li><a href="#0"><i class="fab fa-twitter"></i></a></li>
                                                     <li><a href="#0"><i class="fab fa-google-plus-g"></i></a></li>
                                                     <li><a href="#0"><i class="fab fa-instagram"></i></a></li>
                                                 </ul>
+                                            </div> #}
+                                                    </div>
+                                                    <div class="team-content">
+                                                        <h3 class="title"><a href="#">{{ trainer.trainer.fullName }}</a>
+                                                        </h3>
+                                                        <span class="sub-title">{{ trainer.score|number_format(1) }} / 5 <i
+                                                                    class="fas fa-star"></i></span>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="team-content">
-                                            <h3 class="title"><a href="#">Nilkusa Agawal</a></h3>
-                                            <span class="sub-title">Sr. Marketer</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
+                                        {% endfor %}
+                                        {# <div class="swiper-slide">
                                     <div class="team-item">
                                         <div class="team-thumb">
                                             <img src="{{ asset('build/images/team/team-2.png') }}" alt="team">
@@ -247,14 +267,208 @@
                                             <span class="sub-title">Lady Instructor</span>
                                         </div>
                                     </div>
+                                </div> #}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
+            </section>
+        {% elseif trainers|length ==2 %}
+            <section class="team-section ptb-130">
+                <div class="team-element">
+                    <img src="{{ asset('build/images/element/element-43.png') }}" alt="element">
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="section-header-wrapper">
+                                <div class="section-header" style="width: 100%!important;">
+                                    <h2 class="section-title">Nos Formateurs Acharnés</h2>
+                                    <p>Parce que les experts <b>Collab</b> pratiquent ce qu’ils conseillent ou ce qu’ils enseignent, ils vous apportent les réponses les mieux adaptées à vos objectifs.
+                                        La pédagogie que nous développons vous permet d’anticiper les situations professionnelles que vous devrez gérer dans votre quotidien. Fondée sur des constats et des expériences terrain, notre approche équilibre harmonieusement théorie et pratique, mises en situation, études de cas…
+                                        Nos méthodes permettent à l’apprenant de <b>devenir co-acteur de sa formation et d’acquérir une plus grande autonomie</b>.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center mb-10-none">
+                        <div class="col-xl-12">
+                            <div class="team-slider-area">
+                                <div class="team-slider">
+                                    <div class="d-flex justify-content-around">
+                                        {% for trainer in trainers %}
+                                            <div class="">
+                                                <div class="team-item">
+                                                    <div class="team-thumb">
+                                                        <img src="{{ asset('build/images/team/team-1.png') }}"
+                                                             alt="team">
+                                                        {# <div class="team-social-area">
+                                                <ul class="team-social">
+                                                    <li><a href="#0"><i class="fab fa-facebook-f"></i></a></li>
+                                                    <li><a href="#0"><i class="fab fa-twitter"></i></a></li>
+                                                    <li><a href="#0"><i class="fab fa-google-plus-g"></i></a></li>
+                                                    <li><a href="#0"><i class="fab fa-instagram"></i></a></li>
+                                                </ul>
+                                            </div> #}
+                                                    </div>
+                                                    <div class="team-content">
+                                                        <h3 class="title"><a href="#">{{ trainer.trainer.fullName }}</a>
+                                                        </h3>
+                                                        <span class="sub-title">{{ trainer.score }} / 5 <i
+                                                                    class="fas fa-star"></i></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                        {# <div class="swiper-slide">
+                                    <div class="team-item">
+                                        <div class="team-thumb">
+                                            <img src="{{ asset('build/images/team/team-2.png') }}" alt="team">
+                                            <div class="team-social-area">
+                                                <ul class="team-social">
+                                                    <li><a href="#0"><i class="fab fa-facebook-f"></i></a></li>
+                                                    <li><a href="#0"><i class="fab fa-twitter"></i></a></li>
+                                                    <li><a href="#0"><i class="fab fa-google-plus-g"></i></a></li>
+                                                    <li><a href="#0"><i class="fab fa-instagram"></i></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="team-content">
+                                            <h3 class="title"><a href="#">Abhisek Roy</a></h3>
+                                            <span class="sub-title">Havey Truck Instructor</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="team-item">
+                                        <div class="team-thumb">
+                                            <img src="{{ asset('build/images/team/team-3.png') }}" alt="team">
+                                            <div class="team-social-area">
+                                                <ul class="team-social">
+                                                    <li><a href="#0"><i class="fab fa-facebook-f"></i></a></li>
+                                                    <li><a href="#0"><i class="fab fa-twitter"></i></a></li>
+                                                    <li><a href="#0"><i class="fab fa-google-plus-g"></i></a></li>
+                                                    <li><a href="#0"><i class="fab fa-instagram"></i></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="team-content">
+                                            <h3 class="title"><a href="#">Rashmika Mandana</a></h3>
+                                            <span class="sub-title">Lady Instructor</span>
+                                        </div>
+                                    </div>
+                                </div> #}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        {% else %}
+            <section class="team-section ptb-130">
+                <div class="team-element">
+                    <img src="{{ asset('build/images/element/element-43.png') }}" alt="element">
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="section-header-wrapper">
+                                <div class="section-header" style="width: 100%!important;">
+                                    <h2 class="section-title">Nos Formateurs Acharnés</h2>
+                                    <p>Parce que les experts <b>Collab</b> pratiquent ce qu’ils conseillent ou ce qu’ils enseignent, ils vous apportent les réponses les mieux adaptées à vos objectifs.
+                                        La pédagogie que nous développons vous permet d’anticiper les situations professionnelles que vous devrez gérer dans votre quotidien. Fondée sur des constats et des expériences terrain, notre approche équilibre harmonieusement théorie et pratique, mises en situation, études de cas…
+                                        Nos méthodes permettent à l’apprenant de <b> devenir co-acteur de sa formation et d’acquérir une plus grande autonomie</b>.</p>
+                                </div>
+                                <div class="slider-nav-area">
+                                    <div class="slider-prev">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </div>
+                                    <div class="slider-next">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center mb-10-none">
+                        <div class="col-xl-12">
+                            <div class="team-slider-area">
+                                <div class="team-slider">
+                                    <div class="swiper-wrapper">
+                                        {% for trainer in trainers %}
+                                            <div class="swiper-slide">
+                                                <div class="team-item">
+                                                    <div class="team-thumb">
+                                                        <img src="{{ asset('build/images/team/team-1.png') }}"
+                                                             alt="team">
+                                                        {# <div class="team-social-area">
+                                                <ul class="team-social">
+                                                    <li><a href="#0"><i class="fab fa-facebook-f"></i></a></li>
+                                                    <li><a href="#0"><i class="fab fa-twitter"></i></a></li>
+                                                    <li><a href="#0"><i class="fab fa-google-plus-g"></i></a></li>
+                                                    <li><a href="#0"><i class="fab fa-instagram"></i></a></li>
+                                                </ul>
+                                            </div> #}
+                                                    </div>
+                                                    <div class="team-content">
+                                                        <h3 class="title"><a href="#">{{ trainer.trainer.fullName }}</a>
+                                                        </h3>
+                                                        <span class="sub-title">{{ trainer.score }} / 5 <i
+                                                                    class="fas fa-star"></i></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                        {# <div class="swiper-slide">
+                                    <div class="team-item">
+                                        <div class="team-thumb">
+                                            <img src="{{ asset('build/images/team/team-2.png') }}" alt="team">
+                                            <div class="team-social-area">
+                                                <ul class="team-social">
+                                                    <li><a href="#0"><i class="fab fa-facebook-f"></i></a></li>
+                                                    <li><a href="#0"><i class="fab fa-twitter"></i></a></li>
+                                                    <li><a href="#0"><i class="fab fa-google-plus-g"></i></a></li>
+                                                    <li><a href="#0"><i class="fab fa-instagram"></i></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="team-content">
+                                            <h3 class="title"><a href="#">Abhisek Roy</a></h3>
+                                            <span class="sub-title">Havey Truck Instructor</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="team-item">
+                                        <div class="team-thumb">
+                                            <img src="{{ asset('build/images/team/team-3.png') }}" alt="team">
+                                            <div class="team-social-area">
+                                                <ul class="team-social">
+                                                    <li><a href="#0"><i class="fab fa-facebook-f"></i></a></li>
+                                                    <li><a href="#0"><i class="fab fa-twitter"></i></a></li>
+                                                    <li><a href="#0"><i class="fab fa-google-plus-g"></i></a></li>
+                                                    <li><a href="#0"><i class="fab fa-instagram"></i></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="team-content">
+                                            <h3 class="title"><a href="#">Rashmika Mandana</a></h3>
+                                            <span class="sub-title">Lady Instructor</span>
+                                        </div>
+                                    </div>
+                                </div> #}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+    {% endif %}
     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         End Team
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
@@ -262,60 +476,62 @@
     Start Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
     {% if competition is not empty %}
-    <section style="box-shadow: rgba(203,24,24, 0.6)" class="service-section two ptb-120">
-        <div class="container box-shadow p-5 "  style=" border-radius: 1%;">
-            <div class="row justify-content-center">
-                <div class="col-xl-12">
-                    <div class="service-item three details">
-                        <div class="service-thumb" >
-                            <img   style=" border-radius: 1%;"  src="uploads/competitions/thumbnail/{{ competition[0].thumbnail }}" alt="service">
-                        </div>
-                        <div class="service-content">
-                            <h2 class="title ">{{ competition[0].name }}</h2>
-                            <p>{{ competition[0].description }}</p>
-                            <div class="service-widget-item-area">
-                                <div class="row justify-content-center mb-30-none">
-                                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-30">
-                                        <div class="service-widget-item">
-                                            <div class="service-widget-icon">
-                                                <img src="{{ asset('build/images/icon/icon-17.png') }}" alt="icon">
-                                            </div>
-                                            <div class="service-widget-content">
-                                                <h5 class="title">Localisation</h5>
-                                                <span class="sub-title">{{ competition[0].place }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-30">
-                                        <div class="service-widget-item">
-                                            <div class="service-widget-icon">
-                                                <img src="{{ asset('build/images/icon/icon-18.png') }}" alt="icon">
-                                            </div>
-                                            <div class="service-widget-content">
-                                                <h5 class="title">Date Début</h5>
-                                                <span class="sub-title">{{ competition[0].startDate|date('j F Y') }}</span>
+        <section style="box-shadow: rgba(203,24,24, 0.6)" class="service-section two ptb-120">
+            <div class="container box-shadow p-5 " style=" border-radius: 1%;">
+                <div class="row justify-content-center">
+                    <div class="col-xl-12">
+                        <div class="service-item three details">
+                            <div class="service-thumb">
+                                <img style=" border-radius: 1%;"
+                                     src="uploads/competitions/thumbnail/{{ competition[0].thumbnail }}" alt="service">
+                            </div>
+                            <div class="service-content">
+                                <h2 class="title ">{{ competition[0].name }}</h2>
+                                <p>{{ competition[0].description }}</p>
+                                <div class="service-widget-item-area">
+                                    <div class="row justify-content-center mb-30-none">
+                                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-30">
+                                            <div class="service-widget-item">
+                                                <div class="service-widget-icon">
+                                                    <img src="{{ asset('build/images/icon/icon-17.png') }}" alt="icon">
+                                                </div>
+                                                <div class="service-widget-content">
+                                                    <h5 class="title">Localisation</h5>
+                                                    <span class="sub-title">{{ competition[0].place }}</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-30">
-                                        <div class="service-widget-item">
-                                            <div class="service-widget-icon">
-                                                <img src="{{ asset('build/images/icon/icon-19.png') }}" alt="icon">
-                                            </div>
-                                            <div class="service-widget-content">
-                                                <h5 class="title">Date Fin</h5>
-                                                <span class="sub-title">{{ competition[0].endDate|date('j F Y') }}</span>
+                                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-30">
+                                            <div class="service-widget-item">
+                                                <div class="service-widget-icon">
+                                                    <img src="{{ asset('build/images/icon/icon-18.png') }}" alt="icon">
+                                                </div>
+                                                <div class="service-widget-content">
+                                                    <h5 class="title">Date Début</h5>
+                                                    <span class="sub-title">{{ competition[0].startDate|date('j F Y') }}</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-30">
-                                        <div class="service-widget-item">
-                                            <div class="service-widget-icon">
-                                                <img src="{{ asset('build/images/icon/icon-20.png') }}" alt="icon">
+                                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-30">
+                                            <div class="service-widget-item">
+                                                <div class="service-widget-icon">
+                                                    <img src="{{ asset('build/images/icon/icon-19.png') }}" alt="icon">
+                                                </div>
+                                                <div class="service-widget-content">
+                                                    <h5 class="title">Date Fin</h5>
+                                                    <span class="sub-title">{{ competition[0].endDate|date('j F Y') }}</span>
+                                                </div>
                                             </div>
-                                            <div class="service-widget-content">
-                                                <h5 class="title">Prix</h5>
-                                                <span class="sub-title">{{ competition[0].price }}</span>
+                                        </div>
+                                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-30">
+                                            <div class="service-widget-item">
+                                                <div class="service-widget-icon">
+                                                    <img src="{{ asset('build/images/icon/icon-20.png') }}" alt="icon">
+                                                </div>
+                                                <div class="service-widget-content">
+                                                    <h5 class="title">Prix</h5>
+                                                    <span class="sub-title">{{ competition[0].price }}</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -325,8 +541,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
     {% endif %}
     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         End Service
@@ -335,100 +550,112 @@
     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     Start Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-    <section class="service-section ptb-120">
-        <div class="service-element-one">
-            <img src="{{ asset('build/images/element/element-34.png') }}" alt="element">
-        </div>
-        <div class="service-element-two">
-            <img src="{{ asset('build/images/element/element-35.png') }}" alt="element">
-        </div>
-        <div class="service-element-three">
-            <img src="{{ asset('build/images/element/element-36.png') }}" alt="element">
-        </div>
-        <div class="service-element-four">
-            <img src="{{ asset('build/images/element/element-36.png') }}" alt="element">
-        </div>
-        <div class="service-element-five">
-            <img src="{{ asset('build/images/element/element-37.png') }}" alt="element">
-        </div>
-        <div class="service-shape shape-1"></div>
-        <div class="service-shape shape-2"></div>
-        <div class="service-shape shape-3"></div>
-        <div class="service-shape shape-4"></div>
-        <div class="service-shape shape-5"></div>
-        <div class="service-shape shape-6"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="section-header-wrapper">
-                        <div class="section-header white">
-                            <h2 class="section-title">Our Awesome Services</h2>
-                            <p>Credibly grow premier ideas rather than bricks-and-clicks strategic theme areas distributed for stand-alone web-readiness.</p>
-                        </div>
-                        <div class="section-header-btn">
-                            <a href="service.html" class="custom-btn two">View All Services <i class="icon-Group-2361 ml-2"></i></a>
+    {% if lastCompetition is not empty and rankedParticipants|length > 2 %}
+        <section class="service-section ptb-120">
+            <div class="service-element-one">
+                <img src="{{ asset('build/images/element/element-34.png') }}" alt="element">
+            </div>
+            <div class="service-element-two">
+                <img src="{{ asset('build/images/element/element-35.png') }}" alt="element">
+            </div>
+            <div class="service-element-three">
+                <img src="{{ asset('build/images/element/element-36.png') }}" alt="element">
+            </div>
+            <div class="service-element-four">
+                <img src="{{ asset('build/images/element/element-36.png') }}" alt="element">
+            </div>
+            <div class="service-element-five">
+                <img src="{{ asset('build/images/element/element-37.png') }}" alt="element">
+            </div>
+            <div class="service-shape shape-1"></div>
+            <div class="service-shape shape-2"></div>
+            <div class="service-shape shape-3"></div>
+            <div class="service-shape shape-4"></div>
+            <div class="service-shape shape-5"></div>
+            <div class="service-shape shape-6"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="section-header-wrapper">
+                            <div class="section-header white">
+                                <h2 class="section-title">{{ lastCompetition.name }}</h2>
+                                <p>{{ lastCompetition.description }}</p>
+                            </div>
+                            <div class="section-header-btn">
+                                <a target="_blank"
+                                   href="{{ path('app_competition_details',{'id':lastCompetition.id}) }}"
+                                   class="custom-btn two">Détails du compétition <i
+                                            class="icon-Group-2361 ml-2"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row justify-content-center mb-30-none">
-                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-30">
-                    <div style="margin-top: 50px">
-                        <img style="z-index: -1;" src="{{ asset('build/images/rank/rank2.png') }}" alt="a">
-                        <div class="service-item">
-                            <div class="service-icon">
-                                <img src="{{ asset('build/images/team/team-1.png') }}" style="border-radius: 50%;" alt="icon">
-                            </div>
-                            <div class="service-content">
-                                <h3 class="title"><a href="service-details.html">Web Design</a></h3>
-                                <p>We rank among the best in the US, Argentina, and Ukraine. Our apps get</p>
-                                <div class="service-btn">
+                <div class="row justify-content-center mb-30-none">
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-30">
+                        <div style="margin-top: 50px">
+                            <img style="z-index: -1;" src="{{ asset('build/images/rank/rank2.png') }}" alt="a">
+                            <div class="service-item">
+                                <div class="service-icon">
+                                    <img src="{{ asset('build/images/team/team-1.png') }}" style="border-radius: 50%;"
+                                         alt="icon">
+                                </div>
+                                <div class="service-content">
+                                    <h3 class="title"><a
+                                                href="service-details.html">{{ rankedParticipants[1].participant.user.fullName }}</a>
+                                    </h3>
+                                    <p>{{ rankedParticipants[1].participant.prize }}</p>
+                                    {# <div class="service-btn">
                                     <a href="service-details.html" class="custom-btn">Learn More <i class="icon-Group-2361 ml-2"></i></a>
+                                </div> #}
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-30">
-                    <img style="z-index: -1;" src="{{ asset('build/images/rank/rank1.png') }}" alt="a">
-                    <div class="service-item">
-                        <div class="service-icon">
-                            <img src="{{ asset('build/images/team/team-2.png') }}" style="border-radius: 50%;" alt="icon">
-                        </div>
-                        <div class="service-content">
-                            <h3 class="title"><a href="service-details.html">Digital Marketing</a></h3>
-                            <p>We rank among the best in the US, Argentina, and Ukraine. Our apps get</p>
-                            <div class="service-btn">
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-30">
+                        <img style="z-index: -1;" src="{{ asset('build/images/rank/rank1.png') }}" alt="a">
+                        <div class="service-item">
+                            <div class="service-icon">
+                                <img src="{{ asset('build/images/team/team-2.png') }}" style="border-radius: 50%;"
+                                     alt="icon">
+                            </div>
+                            <div class="service-content">
+                                <h3 class="title"><a
+                                            href="service-details.html">{{ rankedParticipants[2].participant.user.fullName }}</a>
+                                </h3>
+                                <p>{{ rankedParticipants[2].participant.prize }}</p>
+                                {# <div class="service-btn">
                                 <a href="service-details.html" class="custom-btn">Learn More <i class="icon-Group-2361 ml-2"></i></a>
+                            </div> #}
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-30">
-                    <div style="margin-top: 80px">
-                        <img style="z-index: -1;" src="{{ asset('build/images/rank/rank3.png') }}" alt="a">
-                        <div class="service-item">
-                            <div class="service-icon">
-                                <img src="{{ asset('build/images/team/team-3.png') }}" style="border-radius: 50%;" alt="icon">
-                            </div>
-                            <div class="service-content">
-                                <h3 class="title"><a href="service-details.html">Search SEO</a></h3>
-                                <p>We rank among the best in the US, Argentina, and Ukraine. Our apps get</p>
-                                <div class="service-btn">
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-30">
+                        <div style="margin-top: 80px">
+                            <img style="z-index: -1;" src="{{ asset('build/images/rank/rank3.png') }}" alt="a">
+                            <div class="service-item">
+                                <div class="service-icon">
+                                    <img src="{{ asset('build/images/team/team-3.png') }}" style="border-radius: 50%;"
+                                         alt="icon">
+                                </div>
+                                <div class="service-content">
+                                    <h3 class="title"><a
+                                                href="service-details.html">{{ rankedParticipants[0].participant.user.fullName }}</a>
+                                    </h3>
+                                    <p>{{ rankedParticipants[0].participant.prize }}</p>
+                                    {# <div class="service-btn">
                                     <a href="service-details.html" class="custom-btn">Learn More <i class="icon-Group-2361 ml-2"></i></a>
+                                </div> #}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    {% endif %}
     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         End Service
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-
-
 
 
     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -457,11 +684,11 @@
                         <div class="brand-slider">
                             <div class="swiper-wrapper">
                                 {% for partner in partners %}
-                                <div class="swiper-slide">
-                                    <div class="brand-item">
-                                        <img src="uploads/partners/{{ partner.logo }}" alt="{{ partner.logo }}">
+                                    <div class="swiper-slide">
+                                        <div class="brand-item">
+                                            <img src="uploads/partners/{{ partner.logo }}" alt="{{ partner.logo }}">
+                                        </div>
                                     </div>
-                                </div>
                                 {% endfor %}
                             </div>
                         </div>
@@ -482,9 +709,7 @@
                         <div class="agency-logo-text">
                             <span>COLLAB</span>
                         </div>
-                        <h2 class="title">Softim is a digital agency that offers a wide scale of
-                            creative services, including brand development
-                            online marketing and lots more.</h2>
+                        <h2 class="title">Communauté de partage des connaissances et savoir-faire à moindre coût !</h2>
                     </div>
                     <div class="agency-statistics-area">
                         <div class="row justify-content-center mb-30-none">
@@ -492,10 +717,10 @@
                                 <div class="statistics-item">
                                     <div class="statistics-content">
                                         <div class="odo-area">
-                                            <h3 class="odo-title odometer" data-odometer-final="12">0</h3>
+                                            <h3 class="odo-title odometer" data-odometer-final="2">0</h3>
                                             <h3 class="title">+</h3>
                                         </div>
-                                        <p>Years of operation</p>
+                                        <p>Années D'expérience</p>
                                     </div>
                                 </div>
                             </div>
@@ -503,10 +728,10 @@
                                 <div class="statistics-item">
                                     <div class="statistics-content">
                                         <div class="odo-area">
-                                            <h3 class="odo-title odometer" data-odometer-final="256">0</h3>
+                                            <h3 class="odo-title odometer" data-odometer-final="5">0</h3>
                                             <h3 class="title">+</h3>
                                         </div>
-                                        <p>Projects deliverd</p>
+                                        <p>Projets Livrées</p>
                                     </div>
                                 </div>
                             </div>
@@ -514,10 +739,10 @@
                                 <div class="statistics-item">
                                     <div class="statistics-content">
                                         <div class="odo-area">
-                                            <h3 class="odo-title odometer" data-odometer-final="65">0</h3>
+                                            <h3 class="odo-title odometer" data-odometer-final="6">0</h3>
                                             <h3 class="title">+</h3>
                                         </div>
-                                        <p>Team Specialist</p>
+                                        <p>Formateurs</p>
                                     </div>
                                 </div>
                             </div>
@@ -525,10 +750,10 @@
                                 <div class="statistics-item">
                                     <div class="statistics-content">
                                         <div class="odo-area">
-                                            <h3 class="odo-title odometer" data-odometer-final="25">0</h3>
+                                            <h3 class="odo-title odometer" data-odometer-final="30">0</h3>
                                             <h3 class="title">+</h3>
                                         </div>
-                                        <p>Around The World</p>
+                                        <p class="text-capitalize">étudiants</p>
                                     </div>
                                 </div>
                             </div>
@@ -562,12 +787,6 @@
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
 
-
-
-
-
-
-
     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         Start Call-to-action
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
@@ -587,11 +806,14 @@
                     <div class="col-xl-7 offset-xl-5">
                         <div class="subscribe-content">
                             <h2 class="title">Get Newsletter From Softim</h2>
-                            <p>Credibly grow premier ideas rather than bricks-and-clicks strategic theme areas distributed for stand-alone web-readiness.</p>
+                            <p>Credibly grow premier ideas rather than bricks-and-clicks strategic theme areas
+                                distributed for stand-alone web-readiness.</p>
                             <form class="subscribe-form">
-                                <label class="subscribe-icon"><img src="{{ asset('build/images/icon/icon-7.png') }}" alt="icon"></label>
+                                <label class="subscribe-icon"><img src="{{ asset('build/images/icon/icon-7.png') }}"
+                                                                   alt="icon"></label>
                                 <input type="text" class="form--control" placeholder="Email Address">
-                                <button type="submit" class="btn--base">SUBSCRIBE <i class="fab fa-telegram-plane"></i></button>
+                                <button type="submit" class="btn--base">SUBSCRIBE <i class="fab fa-telegram-plane"></i>
+                                </button>
                             </form>
                         </div>
                     </div>

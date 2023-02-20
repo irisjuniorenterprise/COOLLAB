@@ -116,7 +116,9 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             $queryBuilder
                 ->andWhere('user.roles LIKE :role')
                 ->andWhere('user.isApproved = :isApproved')
-                ->setParameter('isApproved', $isApproved)
+                ->andWhere('user.isVerified = :isVerified')
+                ->setParameter('isApproved', true)
+                ->setParameter('isVerified', true)
                 ->setParameter('role', '%"'.$role.'"%');
         }
         return $queryBuilder;
@@ -132,6 +134,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                 ->orWhere('user.firstName LIKE :firstName')
                 ->orWhere('user.lastName LIKE :lastName')
                 ->andWhere('user.roles LIKE :role')
+                ->andWhere('user.isApproved = :isApproved')
+                ->andWhere('user.isVerified = :isVerified')
+                ->setParameter('isApproved', true)
+                ->setParameter('isVerified', true)
                 ->setParameter('email', '%'.$q.'%')
                 ->setParameter('firstName', '%'.$q.'%')
                 ->setParameter('lastName', '%'.$q.'%')
@@ -150,6 +156,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                 ->andWhere('user.firstName LIKE :firstN')
                 ->orWhere('user.lastName LIKE :lastN')
                 ->orWhere('user.email LIKE :email')
+                ->andWhere('user.isApproved = :isApproved')
+                ->andWhere('user.isVerified = :isVerified')
+                ->setParameter('isApproved', true)
+                ->setParameter('isVerified', true)
                 ->setParameter('firstN', '%"'.$name.'"%')
                 ->setParameter('lastN', '%"'.$name.'"%')
                 ->setParameter('email', '%"'.$name.'"%');

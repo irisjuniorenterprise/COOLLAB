@@ -59,7 +59,7 @@ class TrainingSession
     #[ORM\OneToMany(mappedBy: 'trainingSession', targetEntity: TrainingTrainer::class, fetch: 'EAGER', orphanRemoval: true)]
     private Collection $trainingTrainers;
 
-    #[ORM\OneToMany(mappedBy: 'trainingSession', targetEntity: ParticipateToTrainingSession::class, fetch: 'EAGER')]
+    #[ORM\OneToMany(mappedBy: 'trainingSession', targetEntity: ParticipateToTrainingSession::class, fetch: 'EAGER',orphanRemoval: true)]
     private Collection $participateToTrainingSessions;
 
     #[ORM\ManyToOne(inversedBy: 'trainingSessions')]
@@ -196,7 +196,7 @@ class TrainingSession
         return $this;
     }
 
-    public function getPrice(): float
+    public function getPrice(): ?float
     {
         return $this->price;
     }

@@ -6,6 +6,7 @@ use App\Entity\Competition;
 use App\Form\CompetitionType;
 use App\Repository\CompetitionRepository;
 use App\Repository\ImageRepository;
+use App\Repository\ParticipateToCompetitionRepository;
 use App\Service\FileUploaderService;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
@@ -23,7 +24,7 @@ class CompetitionController extends AbstractController
     public function index(Request $request, CompetitionRepository $competitionRepository, int $page = 1): Response
     {
         $competitionName = $request->query->get('q');
-        $page = (int) $page;
+        $page = (int)$page;
         $queryBuilder = $competitionRepository->createOrderedByCompetitionNameQueryBuilder($competitionName);
         $adapter = new QueryAdapter($queryBuilder);
         $pagerFanta = Pagerfanta::createForCurrentPageWithMaxPerPage(
@@ -78,11 +79,9 @@ class CompetitionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $targetDirectory = 'uploads/competitions/';
             $competitionFiles = $_FILES['competitionFiles'];
-            if ($competitionFiles !== null && $competitionFiles['size'][0] !== 0)
-            {
+            if ($competitionFiles !== null && $competitionFiles['size'][0] !== 0) {
                 $fileUploaded = FileUploaderService::uploadImages($competitionFiles, $targetDirectory, $competition, $competitionRepository, $imageRepository);
-                if ($fileUploaded === false)
-                {
+                if ($fileUploaded === false) {
                     $this->addFlash('danger', 'Une erreur est survenue lors de l\'upload des images');
                 }
             }
@@ -132,12 +131,36 @@ class CompetitionController extends AbstractController
     public function deleteImage(Competition $competition, CompetitionRepository $competitionRepository, ImageRepository $imageRepository, int $imageId): Response
     {
         $image = $imageRepository->find($imageId);
-        if ($image !== null)
-        {
+        if ($image !== null) {
             $imageRepository->remove($image, true);
-        }else{
+        } else {
             $this->addFlash('danger', 'Une erreur est survenue lors de la suppression de l\'image');
         }
+
+        return $this->redirectToRoute('app_competition_show', ['id' => $competition->getId()], Response::HTTP_SEE_OTHER);
+    }
+
+    // rank the users of a competition
+    #[Route('/{id}/rank', name: 'app_competition_rank', methods: ['GET'])]
+    public function rank(Competition $competition, CompetitionRepository $competitionRepository): Response
+    {
+        return $this->render('competition/rank.html.twig', [
+            'competition' => $competition,
+        ]);
+    }
+
+    // save the rank of the users of a competition
+    #[Route('/{id}/saveRank', name: 'app_competition_save_rank', methods: ['POST', 'GET'])]
+    public function saveRank(ParticipateToCompetitionRepository $participateToCompetitionRepository,Competition $competition, CompetitionRepository $competitionRepository, Request $request): Response
+    {
+        $userId = $request->request->get('userId');
+        $userRank = $request->request->get('userRank');
+        $prize = $request->request->get('prize');
+        $participants = $participateToCompetitionRepository->findOneBy(['competition' => $competition,'user'=>$userId]);
+        $participants?->setClassification($userRank);
+        $participants?->setPrize($prize);
+        $competitionRepository->save($competition, true);
+
 
         return $this->redirectToRoute('app_competition_show', ['id' => $competition->getId()], Response::HTTP_SEE_OTHER);
     }

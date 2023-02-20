@@ -37,7 +37,7 @@ class ParticipateToTrainingSession
     #[ORM\JoinColumn(nullable: false)]
     private ?TrainingSession $trainingSession = null;
 
-    #[ORM\OneToMany(mappedBy: 'participateToTrainingSession', targetEntity: Comment::class)]
+    #[ORM\OneToMany(mappedBy: 'participateToTrainingSession', targetEntity: Comment::class,orphanRemoval: true)]
     private Collection $comment;
 
     public function __construct()

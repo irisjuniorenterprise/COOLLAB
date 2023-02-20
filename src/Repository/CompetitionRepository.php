@@ -111,6 +111,17 @@ class CompetitionRepository extends ServiceEntityRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
+    // get the last competition in the database (for the homepage) by date
+    public function getLastCompetition(): array
+    {
+        $queryBuilder = $this->addOrderByDateQueryBuilder();
+        $queryBuilder
+            ->andWhere('competition.startDate < :startDate')
+            ->setParameter('startDate', new \DateTimeImmutable())
+            ->setMaxResults(1);
+        return $queryBuilder->getQuery()->getResult();
+    }
+
 
     public function findFilteredCompetitions($cityFilter, $priceFilter): QueryBuilder
     {

@@ -72,5 +72,72 @@
                 </tbody>
             </table>
         </div>
+        <div class="container-fluid pt-4 px-4">
+            <div class="row g-4">
+                <div class="col-12">
+                    <div class="bg-light rounded h-100 p-4">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Rank</th>
+                                    <th scope="col">Prize</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% set foo = 0 %}
+                                {% for participate in competition.participateToCompetitions %}
+                                    {% if participate.classification is not null  %}
+                                        {% set foo = foo+1 %}
+                                    {% endif %}
+                                    <tr>
+                                        <td class="h5">{{ participate.user.fullName }}</td>
+                                        <td class="h5">{{ participate.classification }}</td>
+                                        <td class="h5">{{ participate.prize }}</td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="3">no records found</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <div class="col-md-12">
+
+
+
+                                <form action="{{ path('app_competition_save_rank',{'id':competition.id}) }}" method="post">
+                                    {% if foo==0 %}
+                                        <label for="rank">Premiere place</label>
+                                        <input type="hidden" name="userRank" id="rank" value="1">
+                                    {% elseif foo==1 %}
+                                        <label for="rank">Deuxieme place</label>
+                                        <input type="hidden" name="userRank" id="rank" value="2">
+                                    {% elseif foo==2 %}
+                                        <label for="rank">Troisieme place</label>
+                                        <input type="hidden" name="userRank" id="rank" value="3">
+                                    {% endif %}
+                                    {% if foo <3 %}
+                                        <select name="userId" id="rank">
+                                            {% for participant in competition.participateToCompetitions %}
+                                                {% if participant.classification is null  %}
+                                                    <option value="{{ participant.user.id }}">{{ participant.user.fullName }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                        <label for="prize">prize</label>
+                                        <input id="prize" name ="prize" type="text">
+
+                                        <button type="submit" class="btn btn-outline-primary">Valider</button>
+                                    {% endif %}
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

@@ -24,9 +24,8 @@
             <div class="row justify-content-center mt-5">
                 <div class="col-xl-7 col-lg-8 text-center">
                     <div class="section-header">
-                        <h2 class="section-title">Why Choose Softim?</h2>
-                        <p>We rank among the best in the US, Argentina, and Ukraine. Our apps get featured as best in
-                            class, and our clients love our work.</p>
+                        <h2 class="section-title">COLLAB</h2>
+                        <p>We Share knowledge and more</p>
                     </div>
                 </div>
             </div>
@@ -44,6 +43,7 @@
                         </div>
                     </nav>
                     <div class="tab-content" id="nav-tabContent">
+                        {# user #}
                         <div class="tab-pane fade" id="software" role="tabpanel" aria-labelledby="software-tab">
                             <div class="choose-item">
                                 <div style="width: 100%;" class="rounded">
@@ -65,6 +65,12 @@
                                         </div>
                                     </div>
                                     <div class="form-row">
+                                        <div class="form-floating form-group mb-3 col-md-12">
+                                            <label for="dateUser">Date de naissance</label>
+                                            <input type="date" class="form-control" id="dateUser" name="dateUser">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
                                         <div class="form-floating form-group col-md-6 mb-4">
                                             {{ form_row(registrationForm.firstName) }}
                                         </div>
@@ -80,12 +86,58 @@
                                             {{ form_row(registrationForm.address) }}
                                         </div>
                                     </div>
+                                    <div class="form-row contact-form">
+                                    <div class="form-floating form-group col-md-12">
+                                        <div class="contact-select">
+                                            <label for="club">Région</label>
+                                            <select class="form--control" name="city" id="city">
+                                                <option selected>Choisir la région</option>
+                                                <option value="Ariana">Ariana</option>
+                                                <option value="Beja">Beja</option>
+                                                <option value="Ben Arous">Ben Arous</option>
+                                                <option value="Bizerte">Bizerte</option>
+                                                <option value="Gabes">Gabes</option>
+                                                <option value="Gafsa">Gafsa</option>
+                                                <option value="Jendouba">Jendouba</option>
+                                                <option value="Kairouan">Kairouan</option>
+                                                <option value="Kasserine">Kasserine</option>
+                                                <option value="Kebili">Kebili</option>
+                                                <option value="Kef">Kef</option>
+                                                <option value="Mahdia">Mahdia</option>
+                                                <option value="Manouba">Manouba</option>
+                                                <option value="Medenine">Medenine</option>
+                                                <option value="Monastir">Monastir</option>
+                                                <option value="Nabeul">Nabeul</option>
+                                                <option value="Sfax">Sfax</option>
+                                                <option value="Sidi Bouzid">Sidi Bouzid</option>
+                                                <option value="Siliana">Siliana</option>
+                                                <option value="Sousse">Sousse</option>
+                                                <option value="Tataouine">Tataouine</option>
+                                                <option value="Tozeur">Tozeur</option>
+                                                <option value="Tunis">Tunis</option>
+                                                <option value="Zaghouan">Zaghouan</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class="form-row contact-form">
+                                        <div class="form-floating form-group col-md-12">
+                                            <div class="contact-select">
+                                                <label for="pro">Sexe</label>
+                                                <select class="form--control" name="gender" id="pro" required>
+                                                    <option value="Homme" class="text-capitalize">Homme</option>
+                                                    <option value="Femme" class="text-capitalize">Femme</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Sign In
                                     </button>
                                     {{ form_end(registrationForm) }}
                                 </div>
                             </div>
                         </div>
+                        {# trainer #}
                         <div class="tab-pane fade show active" id="company" role="tabpanel"
                              aria-labelledby="company-tab">
                             <div class="choose-item">
@@ -93,7 +145,7 @@
                                     <h3>Registre en tant que formateur</h3>
                                     <p>Vous pouvez vous inscrire en tant que formateur pour accéder à la plateforme et
                                         bénéficier de ses services.</p>
-                                    {{ form_start(registrationTrainerForm) }}
+                                    {{ form_start(registrationTrainerForm,{'attr':{'role':'form', 'enctype':'multipart/form-data','action':path('app_register_trainer')}}) }}
                                     {% for flash in app.flashes('success') %}
                                         <div class="alert alert-success">{{ flash }}</div>
                                     {% endfor %}
@@ -105,6 +157,12 @@
                                             {{ form_row(registrationTrainerForm.plainPassword, {
                                                 label: 'Password'
                                             }) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-floating form-group mb-3 col-md-12">
+                                            <label for="dateTrainer">Date de naissance</label>
+                                            <input type="date" class="form-control" id="dateTrainer" name="dateTrainer">
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -126,16 +184,70 @@
                                     <div class="form-floating mb-4">
                                         {{ form_row(registrationTrainerForm.address) }}
                                     </div>
-                                    <div class="form-row">
-                                        <div class="form-floating form-group col-md-6 mb-4">
-                                            <label for="club">Club</label>
-                                            <input type="text" class="form-control" id="club" name="club"
-                                                   placeholder="Veuillez séparer chacun club par une ( , ).">
+                                    <div class="form-row contact-form">
+                                        <div class="form-floating form-group col-md-6">
+                                            <div class="contact-select">
+                                                <label for="club">Région</label>
+                                                <select required class="form--control" name="city" id="city">
+                                                    <option selected>Choisir la région</option>
+                                                    <option value="Ariana">Ariana</option>
+                                                    <option value="Beja">Beja</option>
+                                                    <option value="Ben Arous">Ben Arous</option>
+                                                    <option value="Bizerte">Bizerte</option>
+                                                    <option value="Gabes">Gabes</option>
+                                                    <option value="Gafsa">Gafsa</option>
+                                                    <option value="Jendouba">Jendouba</option>
+                                                    <option value="Kairouan">Kairouan</option>
+                                                    <option value="Kasserine">Kasserine</option>
+                                                    <option value="Kebili">Kebili</option>
+                                                    <option value="Kef">Kef</option>
+                                                    <option value="Mahdia">Mahdia</option>
+                                                    <option value="Manouba">Manouba</option>
+                                                    <option value="Medenine">Medenine</option>
+                                                    <option value="Monastir">Monastir</option>
+                                                    <option value="Nabeul">Nabeul</option>
+                                                    <option value="Sfax">Sfax</option>
+                                                    <option value="Sidi Bouzid">Sidi Bouzid</option>
+                                                    <option value="Siliana">Siliana</option>
+                                                    <option value="Sousse">Sousse</option>
+                                                    <option value="Tataouine">Tataouine</option>
+                                                    <option value="Tozeur">Tozeur</option>
+                                                    <option value="Tunis">Tunis</option>
+                                                    <option value="Zaghouan">Zaghouan</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="form-floating form-group col-md-6 mb-4">
-                                            <label for="work">Expérience</label>
-                                            <input type="text" class="form-control" id="work" name="work"
-                                                   placeholder="Veuillez séparer chacune des sociétés par une ( , ).">
+                                        <div class="form-floating form-group col-md-6">
+                                            <div class="contact-select">
+                                                <label for="pro">Vous êtes</label>
+                                                <select required class="form--control" name="prof" id="pro">
+                                                    <option selected>Choisir la profession</option>
+                                                    <option value="élève" class="text-capitalize">élève</option>
+                                                    <option value="étudiant" class="text-capitalize">étudiant</option>
+                                                    <option value="professionell" class="text-capitalize">professionell</option>
+                                                    <option value="Chercheur d'emploi" class="text-capitalize">Chercheur d'emploi</option>
+                                                    <option value="Autre" class="text-capitalize">Autre</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row contact-form">
+                                        <div class="form-floating form-group col-md-12">
+                                            <div class="contact-select">
+                                                <label for="pro">Sexe</label>
+                                                <select class="form--control" name="gender" id="pro" required>
+                                                    <option value="Homme" class="text-capitalize">Homme</option>
+                                                    <option value="Femme" class="text-capitalize">Femme</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row contact-form">
+                                        <div class="form-floating form-group col-md-12">
+                                            <div class="contact-select">
+                                                <label for="pro">Image</label>
+                                                <input type="file" name="trainerImage" accept="image/*">
+                                            </div>
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Sign In
@@ -151,6 +263,10 @@
             </div>
         </div>
     </section>
+    <!-- jquery -->
+    <script src="assets/js/jquery-3.6.0.min.js"></script>
+    <!-- bootstrap js -->
+    <script src="assets/js/bootstrap.min.js"></script>
     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         End Choose
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->

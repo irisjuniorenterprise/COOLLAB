@@ -42,10 +42,10 @@ class Competition
     #[ORM\Column(type: Types::ARRAY)]
     private array $guest = [];
 
-    #[ORM\OneToMany(mappedBy: 'competition', targetEntity: ParticipateToCompetition::class)]
+    #[ORM\OneToMany(mappedBy: 'competition', targetEntity: ParticipateToCompetition::class, fetch: 'EAGER', orphanRemoval: true)]
     private Collection $participateToCompetitions;
 
-    #[ORM\OneToMany(mappedBy: 'competition', targetEntity: Image::class)]
+    #[ORM\OneToMany(mappedBy: 'competition', targetEntity: Image::class, orphanRemoval: true)]
     private Collection $imageCompetitions;
 
     #[ORM\Column(length: 255, nullable: true)]

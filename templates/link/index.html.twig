@@ -1,0 +1,39 @@
+{% extends 'adminDashboard/base.html.twig' %}
+
+{% block title %}Category index{% endblock %}
+
+{% block body %}
+    {{ include('partials/_header.html.twig') }}
+    {{ include('partials/_sidebar.html.twig') }}
+    <div class="container-fluid pt-4 px-4">
+        <div class="row g-4">
+            <div class="col-12">
+                <div class="bg-light rounded h-100 p-4">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{ link.id }}</td>
+                                    <td>{{ link.video }}</td>
+                                    <td>
+                                        <form method="post" action="{{ path('app_link_video_update',{id:link.id}) }}">
+                                            <input required type="text" name="video">
+                                            <button type="submit" class="btn btn-primary">Update</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

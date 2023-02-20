@@ -1,0 +1,134 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <body>
+    <div class="preloader">
+        <div class="drawing" id="loading">
+            <div class="loading-dot"></div>
+        </div>
+    </div>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Preloader
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+    {{ include('partials/_cursor.index.html.twig') }}
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Header
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    {{ include('partials/_header.index.pages.html.twig') }}
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Header
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Banner
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <section class="banner-section two inner">
+        <div class="banner-element-four two">
+            <img src="assets/images/element/element-5.png" alt="element">
+        </div>
+        <div class="banner-element-five two">
+            <img src="assets/images/element/element-7.png" alt="element">
+        </div>
+        <div class="banner-element-nineteen two">
+            <img src="assets/images/element/element-6.png" alt="element">
+        </div>
+        <div class="banner-element-twenty-two two">
+            <img src="assets/images/element/element-69.png" alt="element">
+        </div>
+        <div class="banner-element-twenty-three two">
+            <img src="assets/images/element/element-70.png" alt="element">
+        </div>
+        <div class="container">
+            <div class="row justify-content-center align-items-center mb-30-none">
+                <div class="col-xl-12 mb-30">
+                    <div class="banner-content two">
+                        <div class="banner-content-header">
+                            <h2 class="title">Team Single</h2>
+                            <div class="breadcrumb-area">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Team Single</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Banner
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Scroll-To-Top
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <a href="#" class="scrollToTop"><i class="las la-angle-double-up"></i></a>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Scroll-To-Top
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Team
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <section class="team-section three ptb-120">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-12">
+                    <div class="team-item details">
+                        <table class="table caption-top">
+                            <thead>
+                            <tr>
+                                <th scope="col">Nom</th>
+                                <th scope="col">Prénom</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{ dump(trainingForPresence) }}
+                            {% for trainingPresence in trainingForPresence %}
+                                {% for participant in trainingPresence.trainingSession.participateToTrainingSessions %}
+                                    <tr>
+                                        <td>{{ participant.user.lastName }}</td>
+                                        <td>{{ participant.user.firstName }}</td>
+                                        <td>{% if participant.isPresent == false %}<a
+                                                href="{{ path('app_profile_training_participated_presence_set',{id:trainingPresence.trainingSession.id, userId:participant.user.id}) }}">
+                                                    Présent</a>{% else %} <span class="badge badge--success text-white">Présent</span> {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% endfor %}
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><a href="{{ path('app_profile_trainer') }}">Terminer</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Footer
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    {{ include('partials/_footer.index.html.twig') }}
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Footer
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+    <!-- jquery -->
+    <script src="assets/js/jquery-3.6.0.min.js"></script>
+    <!-- bootstrap js -->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!-- swipper js -->
+    </body>
+{% endblock %}

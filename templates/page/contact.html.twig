@@ -1,0 +1,175 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact!{% endblock %}
+
+{% block body %}
+<body>
+{{ include('partials/_preloader.index.html.twig') }}
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    End Preloader
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+{{ include('partials/_cursor.index.html.twig') }}
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Start Header
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+{{ include('partials/_header.index.pages.html.twig') }}
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Banner
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <section class="banner-section two inner">
+        <div class="banner-element-four two">
+            <img src="assets/images/element/element-5.png" alt="element">
+        </div>
+        <div class="banner-element-five two">
+            <img src="assets/images/element/element-7.png" alt="element">
+        </div>
+        <div class="banner-element-nineteen two">
+            <img src="assets/images/element/element-6.png" alt="element">
+        </div>
+        <div class="banner-element-twenty-two two">
+            <img src="assets/images/element/element-69.png" alt="element">
+        </div>
+        <div class="banner-element-twenty-three two">
+            <img src="assets/images/element/element-70.png" alt="element">
+        </div>
+        <div class="container">
+            <div class="row justify-content-center align-items-center mb-30-none">
+                <div class="col-xl-12 mb-30">
+                    <div class="banner-content two">
+                        <div class="banner-content-header">
+                            <h2 class="title">Contact us</h2>
+                            <div class="breadcrumb-area">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Contact us</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Banner
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Scroll-To-Top
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <a href="#" class="scrollToTop"><i class="las la-angle-double-up"></i></a>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Scroll-To-Top
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Contact-item
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <section class="contact-item-section ptb-120">
+        <div class="contact-item-element-one">
+            <img src="assets/images/element/element-71.png" alt="element">
+        </div>
+        <div class="contact-item-element-two">
+            <img src="assets/images/element/element-72.png" alt="element">
+        </div>
+        <div class="container">
+            <div class="row justify-content-center mb-30-none">
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-30">
+                    <div class="contact-item text-center">
+                        <div class="contact-icon-area">
+                            <div class="contact-icon">
+                                <i class="las la-phone"></i>
+                            </div>
+                        </div>
+                        <div class="contact-content">
+                            <h3 class="title">Call Us</h3>
+                            <p><a href="tel:19006963600">+1 (900) 696 3600</a> </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-30">
+                    <div class="contact-item text-center">
+                        <div class="contact-icon-area">
+                            <div class="contact-icon">
+                                <i class="las la-envelope-open-text"></i>
+                            </div>
+                        </div>
+                        <div class="contact-content">
+                            <h3 class="title">Mail Us</h3>
+                            <p><a href="mailto:">softim@yahoo.com</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Contact-item
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Start Contact
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <div class="contact-section ptb-120">
+        <div class="contact-element-one">
+            <img src="assets/images/element/element-73.png" alt="element">
+        </div>
+        <div class="contact-element-two">
+            <img src="assets/images/element/element-74.png" alt="element">
+        </div>
+        <div class="container">
+            {% for flash in app.flashes('success') %}
+                <div class="alert alert-success">{{ flash }}</div>
+            {% endfor %}
+            <form class="contact-form" method="post" action="{{ path('app_send_mail') }}">
+                <div class="row justify-content-center mb-25-none">
+                    <div class="col-xl-6 col-lg-6 form-group">
+                        <label>Nom et prénom</label>
+                        <input type="text" name="name" class="form--control" placeholder="Jhon david smith">
+                    </div>
+                    <div class="col-xl-6 col-lg-6 form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" class="form--control" placeholder="jhonsmith@gmail.com">
+                    </div>
+                    <div class="col-xl-6 col-lg-6 form-group">
+                        <label>Téléphone</label>
+                        <input type="text" name="phone" class="form--control" placeholder="+1 (900) 696 3600" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                    </div>
+                    <div class="col-xl-6 col-lg-6 form-group">
+                        <label>Select Subject</label>
+                        <div class="contact-select">
+                            <select class="form--control" name="type">
+                                <option value="1">Formateur</option>
+                                <option value="2">Partenaire</option>
+                                <option value="3">Sponsor</option>
+                                <option value="4">Autre</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-12 col-lg-12 form-group">
+                        <label>Sujet</label>
+                        <input type="text" name="subject" class="form--control" placeholder="Sujet">
+                    </div>
+                    <div class="col-xl-12 col-lg-12 form-group">
+                        <label>Message</label>
+                        <textarea name="message" class="form--control" placeholder="Write Here ..."></textarea>
+                    </div>
+                    <div class="col-xl-12 col-lg-12 form-group text-center">
+                        <button type="submit" class="btn--base mt-20">Send Now <i class="fas fa-arrow-right ml-2"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        End Contact
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+{{ include('partials/_footer.index.html.twig') }}
+</body>
+
+{% endblock %}

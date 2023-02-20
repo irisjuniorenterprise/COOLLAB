@@ -28,7 +28,7 @@ class ParticipateToCompetition
     #[ORM\ManyToOne(inversedBy: 'participateToCompetitions')]
     private Competition $competition;
 
-    #[ORM\ManyToOne(inversedBy: 'participateToCompetitions')]
+    #[ORM\ManyToOne(fetch: 'EAGER', inversedBy: 'participateToCompetitions')]
     private User $user;
 
     public function getId(): int
@@ -60,7 +60,7 @@ class ParticipateToCompetition
         return $this;
     }
 
-    public function getClassification(): int
+    public function getClassification(): ?int
     {
         return $this->classification;
     }
@@ -72,7 +72,7 @@ class ParticipateToCompetition
         return $this;
     }
 
-    public function getPrize(): string
+    public function getPrize(): ?string
     {
         return $this->prize;
     }

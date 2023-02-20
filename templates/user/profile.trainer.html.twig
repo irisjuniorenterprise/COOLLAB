@@ -45,12 +45,12 @@
                 <div class="col-xl-12 mb-30">
                     <div class="banner-content two">
                         <div class="banner-content-header">
-                            <h2 class="title">Team Single</h2>
+                            <h2 class="title">Page profile</h2>
                             <div class="breadcrumb-area">
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Team Single</li>
+                                        <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Home</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Profile</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -213,7 +213,7 @@
                                                value="{{ user.address }}">
                                         <label for="club">Club</label>
                                         <input type="text" name="club" id="club" required
-                                               value="{% for club in user.club %}{{club}},{% endfor %}">
+                                               value="{% for club in user.club %}{{ club }},{% endfor %}">
                                         <label for="work">Expérience proffessionnel</label>
                                         <input type="text" name="work" id="work" required
                                                value="{% for work in user.workPlace %} {{ work }}, {% endfor %}">
@@ -240,11 +240,14 @@
                                             </div>
                                         </div>
                                         <label for="name">Nom</label>
-                                        <input type="text" name="trainingName" id="name" required placeholder="Entrer le nom du formation">
+                                        <input type="text" name="trainingName" id="name" required
+                                               placeholder="Entrer le nom du formation">
                                         <label for="description">Description</label>
-                                        <input type="text" name="description" id="description" required placeholder="Entrer la description du formation" ">
+                                        <input type="text" name="description" id="description" required
+                                               placeholder="Entrer la description du formation" ">
                                         <label for="address">Adresse</label>
-                                        <input type="text" name="address" id="address" required placeholder="Entrer l'adresse du lieu">
+                                        <input type="text" name="address" id="address" required
+                                               placeholder="Entrer l'adresse du lieu">
                                         <div class="form-group contact-form">
                                             <div class="contact-select">
                                                 <label for="club">Région</label>
@@ -283,10 +286,92 @@
                                         <input type="datetime-local" name="endDate" id="endDate" required>
                                         <div class="form-group">
                                             <label>Prérequis</label>
-                                            <textarea class="form--control" name="requirement" placeholder="Vos prérequis"></textarea>
+                                            <textarea class="form--control" name="requirement"
+                                                      placeholder="Vos prérequis"></textarea>
                                         </div>
                                         <button type="submit" class="btn--base mt-10">Demander</button>
                                     </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="team-tab-area">
+                <div class="team-tab">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <button class="nav-link active" id="education-tab" data-toggle="tab"
+                                    data-target="#request" type="button" role="tab" aria-controls="request"
+                                    aria-selected="true">Formation demandée
+                            </button>
+                            <button class="nav-link" id="experience-tab" data-toggle="tab" data-target="#participate"
+                                    type="button" role="tab" aria-controls="participate" aria-selected="false">Formation
+                                participée
+                            </button>
+                            <button class="nav-link" id="skills-tab" data-toggle="tab" data-target="#presence"
+                                    type="button" role="tab" aria-controls="presence" aria-selected="false">Présence
+                            </button>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="request" role="tabpanel"
+                             aria-labelledby="request-tab">
+                            <div class="team-overview">
+                                {% for requested in trainingRequested %}
+                                    <div class="team-overview-content">
+                                        <h4 class="title">{{ requested.trainingSession.name }}<span
+                                                    class="category two badge badge--success text-white ml-3">{% if requested.trainingSession.isApproved %}Accepté{% endif %}</span>
+                                        </h4>
+                                        <p class="text-capitalize">Categorie
+                                            : {{ requested.trainingSession.category.name }}</p>
+                                        <p class="text-capitalize">Demandé le
+                                            : {{ requested.requestedAt|date('j F Y') }}</p>
+                                        <p class="text-capitalize">Date
+                                            : {{ requested.trainingSession.startDate|date('j F Y') }}</p>
+                                        <p class="text-capitalize">Nombre de participants
+                                            : {{ requested.trainingSession.participateToTrainingSessions.count }}</p>
+                                    </div>
+                                    {% else %}
+                                        <div class="team-overview-content">
+                                            <h4 class="title">Aucune formation demandée</h4>
+                                        </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="participate" role="tabpanel" aria-labelledby="participate-tab">
+                            <div class="team-overview">
+                                <div class="team-overview-content">
+                                    {% for participated in participatedTrainingSessions %}
+                                        <h4 class="title">{{ participated.trainingSession.name }}</h4>
+                                        <p>Catégorie : {{ participated.trainingSession.category.name }}</p>
+                                        <p>Date : {{ participated.trainingSession.startDate|date('j F Y') }}</p>
+                                        <p>Localisation : {{ participated.trainingSession.place }}
+                                            , {{ participated.trainingSession.city }}</p>
+                                        {% else %}
+                                            <p>Vous n'avez pas participé à aucune formation</p>
+                                        {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="presence" role="tabpanel" aria-labelledby="presence-tab">
+                            <div class="team-overview">
+                                <div class="team-overview-content">
+                                    {% for presence in trainingRequested %}
+                                        {% if presence.trainingSession.endDate > date() %}
+                                            <h4 class="title">{{ presence.trainingSession.name }}</h4>
+                                            {% if presence.trainingSession.startDate > date() %}
+                                            <p>
+                                                <a href="{{ path('app_profile_training_participated_presence',{id:presence.trainingSession.id}) }}"
+                                                   target="_blank">Liste du présence</a></p>
+                                                {% else %}
+                                                    <p>Liste du présence - Le {{ presence.trainingSession.startDate|date('j F Y') }} à {{ presence.trainingSession.startDate|date('h:m') }}</p>
+                                            {% endif %}
+                                        {% endif %}
+                                        {% else %}
+                                            <p>Vous n'avez pas de formation</p>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>

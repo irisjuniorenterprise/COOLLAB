@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Image;
 use App\Entity\TrainingSession;
 use App\Entity\TrainingTrainer;
 use App\Form\TrainingSessionType;
+use App\Repository\CommentRepository;
 use App\Repository\ImageRepository;
 use App\Repository\TrainingSessionRepository;
 use App\Repository\TrainingTrainerRepository;
@@ -96,6 +98,7 @@ class TrainingSessionController extends AbstractController
             $trainingTrainer->setPayedAt(null);
             $uploadThumbnail = FileUploaderService::uploadImage($trainingThumbnail, $targetDirectory, $trainingSession);
             $trainingSession->setThumbnail($uploadThumbnail);
+            $trainingSession->setIsApproved(true);
             $trainingTrainerRepository->save($trainingTrainer);
             $trainingSessionRepository->save($trainingSession, true);
 
@@ -112,10 +115,12 @@ class TrainingSessionController extends AbstractController
     #[Route('/{id}', name: 'app_training_session_show', methods: ['GET'])]
     public function show(TrainingSession $trainingSession): Response
     {
+
         return $this->render('training_session/show.html.twig', [
             'training_session' => $trainingSession,
         ]);
     }
+
 
     #[Route('/{id}/edit', name: 'app_training_session_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, TrainingSession $trainingSession, TrainingSessionRepository $trainingSessionRepository, ImageRepository $imageRepository): Response
@@ -163,6 +168,30 @@ class TrainingSessionController extends AbstractController
         $trainingSession->setIsApproved(true);
         $trainingSessionRepository->save($trainingSession, true);
         return $this->redirectToRoute('app_training_session_index', [], Response::HTTP_SEE_OTHER);
+    }    // approve training session
+    #[Route('/{id}/cached/{id_comment}', name: 'app_cached', methods: ['GET', 'POST'])]
+    public function cached(CommentRepository $commentRepository ,TrainingSessionRepository $trainingSessionRepository, $id, $id_comment): Response
+    {
+        $comment = $commentRepository->find($id_comment);
+        if($comment){
+            $comment->setIsCached(true);
+            $commentRepository->save($comment, true);
+        }
+       $trainingSession= $trainingSessionRepository->find($id);
+
+        return $this->redirectToRoute('app_training_session_show', [ 'id' =>$trainingSession?->getId()] );
+    }
+    #[Route('/{id}/visible/{id_comment}', name: 'app_visible_comment', methods: ['GET', 'POST'])]
+    public function commentVisible(CommentRepository $commentRepository ,TrainingSessionRepository $trainingSessionRepository, $id, $id_comment): Response
+    {
+        $comment = $commentRepository->find($id_comment);
+        if($comment){
+            $comment->setIsCached(false);
+            $commentRepository->save($comment, true);
+        }
+       $trainingSession= $trainingSessionRepository->find($id);
+
+        return $this->redirectToRoute('app_training_session_show', [ 'id' =>$trainingSession?->getId()] );
     }
 
     // disapprove training session
