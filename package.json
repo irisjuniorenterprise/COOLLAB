@@ -32,6 +32,6 @@
         "owl.carousel": "2.2",
         "swiper": "^4.3.5",
         "tempusdominus-bootstrap-4": "^5.39.2",
-        "turbo": "^1.6.3"
+        "turbo": "^1.9.1"
     }
 }
